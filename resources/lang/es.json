@@ -1,0 +1,20 @@
+{
+   "Verify Your Email Address":"Verifique su dirección de correo electrónico",
+   "Before proceeding, please check your email for a verification link.":"Antes de continuar, revise su correo electrónico para obtener un enlace de verificación.",
+   "If you did not receive the email":"Si no recibiste el correo electrónico",
+   "click here to request another":"Haga clic aquí para solicitar otro",
+   
+   "Remember Me":"Recuerdame",
+   "Forgot Your Password?":"¿Olvidaste tu contraseña?",
+
+   "The given data was invalid.":"Los datos proporcionados no eran válidos.",
+   
+   "These credentials do not match our records.":"Estas credenciales no coinciden con nuestros registros",
+   "Too many login attempts. Please try again in :seconds seconds.":"Demasiados intentos de inicio de sesión. Inténtalo de nuevo en: segundos segundos.",
+   "Your password has been reset!":"¡Su contraseña ha sido restablecida!",
+   "We have emailed your password reset link!":"¡Hemos enviado su enlace de restablecimiento de contraseña por correo electrónico!",
+   "Please wait before retrying.":"Espere antes de volver a intentarlo",
+   "This password reset token is invalid.":"Este token de restablecimiento de contraseña no es válido",
+   "We can't find a user with that email address.":"No podemos encontrar un usuario con esa dirección de correo electrónico"
+   
+}

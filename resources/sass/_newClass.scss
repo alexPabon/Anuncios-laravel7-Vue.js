@@ -1,0 +1,127 @@
+*{
+    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.imagenFondo{
+    background-image: url('/./storage/images/imgfondo/esferas01.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.hg-10-container{
+    min-height: 100vh;
+}
+
+.hg-8-container{
+    min-height: 80vh;
+}
+
+.hg-5-container{
+    min-height: 50vh;
+}
+
+.hg-3-select{
+    max-height: 300px;
+    overflow: auto;
+}
+
+.bg-gradient{
+    color: cornsilk;
+    background: linear-gradient(52deg, #000000db, #00000085);
+}
+
+.bg-gradient-bottom{    
+    background: linear-gradient(3deg, black, transparent);
+}
+
+.bg-light-blue{
+    background-color: #eaf1f9;
+}
+
+.btn-gradient{
+    background: linear-gradient(52deg, #000000a4, #0000001e);
+}
+
+
+ 
+.bg-blue{
+    background-color: #1b68a9;
+}
+
+.bg-indigo{
+    background-color: $indigo;
+}
+
+.bg-purple{
+    background-color: $purple;
+}
+
+.bg-light-grey{
+    background-color: lightgray;
+}
+
+.bg-pink{
+    background-color: $pink;
+}
+
+.bg-aliceblue{
+    background: #f0f8ff;
+}
+
+.bg-light-violet{
+    background: #f4f4ff;
+}
+
+.overflow-hidden{
+    overflow: hidden;
+}
+
+.pos-absolute{
+    position: absolute;
+    z-index: 1000;
+}
+
+.pos-relative{
+    position: relative;
+}
+
+.pos_boton_add{
+    right: 2rem;
+    top:-2.3rem;
+}
+
+.mx-hg-100{
+    max-height:100px;
+}
+
+.content-center{
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.small-mini{
+    font-size: 65%;
+    font-weight: 400;
+}
+
+.waiting{
+	font-size: 35px;
+	animation-name: colores;
+	animation-duration: 1.1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes colores{
+	from{color: black;}
+	to{color: white;}
+}
