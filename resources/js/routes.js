@@ -42,6 +42,11 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"my-adverts"*/'./views/adverts/MyAdvertsView.vue')
         },
         {
+            path:'/contact-page',
+            name:'contact',
+            component: ()=>import(/*webpackChunkName:"contact"*/'./views/contact/ContactView.vue')
+        },
+        {
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')

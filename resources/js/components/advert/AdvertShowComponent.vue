@@ -31,7 +31,13 @@
                         <span v-on:click="viewImage=!viewImage;btnMoreImg=!btnMoreImg" class="container-btn-ampliar__content">
                             <b style="transform: rotateZ(-45deg);">{{viewImage?'&gt; &lt;':'&lt;  &gt;'}}</b>
                         </span>
-                    </div>                    
+                    </div>
+                    <!-- <img 
+                        v-for="(image, index) in advert.images"
+                        :key="index"
+                        :src="configAddress(image.address)" 
+                        alt="imagen"
+                        class="slider__content">                     -->
                     <div
                         v-for="(image, index) in advert.images"
                         :key="index"

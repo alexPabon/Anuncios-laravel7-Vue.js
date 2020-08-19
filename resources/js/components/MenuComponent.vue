@@ -103,7 +103,7 @@
                         </router-link>
                     </div>
                     <div v-on:click="show=!show; ">
-                        <router-link :to="{name:'menu-contact'}" :class="pageActive('/contacto')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                        <router-link :to="{name:'contact'}" :class="pageActive('/contact-page')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Contacto</span>
                             <span class="foto-mini foto-contact"></span>                                                
                         </router-link>

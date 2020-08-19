@@ -34,17 +34,17 @@ class MessageContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\MessageStoreRequest  $storeRequest
      * @return \Illuminate\Http\Response
      */
     public function store(MessageStoreRequest $storeRequest)
     {
         $contact = env('MAIL_CONTACT');
 
-        $pepe = Purify::clean($storeRequest->post());        
+        $requestClean = Purify::clean($storeRequest->post());        
         
-        Mail::to($contact)->queue(new MessageRecivied($pepe));       
-        return back()->with('success',"El Email se ha enviado correctamente!");
+        Mail::to($contact)->queue(new MessageRecivied($requestClean));       
+        return ['success'=>"El Email se ha enviado correctamente!"];
     }
 }
 

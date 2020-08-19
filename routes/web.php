@@ -32,6 +32,9 @@ Route::get('contact','MessageContactController@index')->name('contact.index')->m
 Route::get('contact/create','MessageContactController@create')->name('contact.create')->middleware('throttle:60,1');
 Route::post('contact','MessageContactController@store')->name('contact.store')->middleware('throttle:7,1');
 
+// Ruta de contacto Vue.js
+Route::get('/contact-page',function(){return view('layouts.master');});
+
 // Rutas de usuario
 Route::apiResource('user', 'UserController')->middleware('throttle:10,1');
 Route::get('user/delete/{delete}','UserController@delete')->name('user.delete')->middleware('throttle:10,1');

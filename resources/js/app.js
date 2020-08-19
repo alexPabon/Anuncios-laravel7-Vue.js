@@ -24,9 +24,9 @@ Vue.component('menu-component', require('./components/MenuComponent.vue').defaul
 
 // Componentes 
 Vue.component('option-component',require('./components/OptionComponent.vue').default);
+
 /** usuarios autenticado */
 Vue.component('authenticated-component',require('./components/authenticated/AuthenticatedComponent.vue').default);
-
 
 // Ruta Inicial home
 Vue.component('home-component', require('./views/HomeViewComponent.vue').default);
@@ -56,6 +56,9 @@ Vue.component('advertimageslist-component',require('./components/advert/AdvertIm
 
 // Categories components and view
 Vue.component('selectCategories-component',require('./components/category/SelectCategoryComponent.vue').default);
+
+// vista de contacto
+Vue.component('contact-view',require('./views/contact/ContactView.vue').default);
 
 // Vista cuando no coincide la direccion
 Vue.component('nofund-view',require('./views/NoFoundView.vue').default);
