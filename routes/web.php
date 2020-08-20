@@ -63,6 +63,9 @@ Route::get('/myadverts',function(){return view('layouts.master');});
 // Rutas categories
 Route::apiResource('category','CategoryController');
 
+// Rutas categories VUE.js
+Route::get('/categories',function(){return view('layouts.master');});
+
 // Rutas de Imagenes
 Route::apiResource('image','ImageController')->middleware('throttle:60,1');
 

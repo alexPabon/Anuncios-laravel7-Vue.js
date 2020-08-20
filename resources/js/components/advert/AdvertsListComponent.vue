@@ -81,9 +81,7 @@ export default {
         }
     },
     methods:{
-        backgrouds(){
-            // let classColors=['bg-light-violet','bg-ligth'];
-            // let posColors = Math.floor(Math.random()*(classColors.length));
+        backgrouds(){            
             this.viewColor=true;           
         }
     },   

@@ -52,6 +52,11 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"all-comments"*/'./views/comments/allCommentsView.vue')
         },
         {
+            path:'/categories',
+            name:'all-categories',
+            component: ()=>import(/*webpackChunkName:"all-categories"*/'./views/categories/CategoriesView.vue')
+        },
+        {
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')

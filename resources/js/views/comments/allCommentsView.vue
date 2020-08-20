@@ -154,11 +154,11 @@
             deletecommentary(index,commentary){
                 
                 axios.delete(`/commentary/${commentary}`)
-                .then((response)=>{                    
-                    this.comments.splice(index, 1);
-                    this.total--;
-                    console.log('DELETE Mycomments mounted.')
-                });
+                    .then((response)=>{                    
+                        this.comments.splice(index, 1);
+                        this.total--;
+                        console.log('DELETE Mycomments mounted.')
+                    });
             }           
         }
     }

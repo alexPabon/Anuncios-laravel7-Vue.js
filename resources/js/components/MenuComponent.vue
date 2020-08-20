@@ -62,20 +62,23 @@
                 
                 <!-- =============== Menu de vistas MODULO2 ============================ -->
                     <!-- Menu de usuarios -->
-                <div v-if="seemenu" key="menu">                    
-                    <div v-if="isAdmin" v-on:click="show=!show; ">
+                <div v-if="seemenu" key="menu">
+                    <!-- MENÚ DE ADMINISTRADOR -->
+                    <div v-if="isAdmin">
+                        <div v-on:click="show=!show; ">
                         <router-link :to="{name:'all-users'}" :class="pageActive('/users')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Todos los usuarios</span>
                             <span class="foto-mini foto-plus"></span>                                       
                         </router-link>
                     </div>
+                    </div>                                        
                     <div v-if="isAuthenticated" v-on:click="show=!show; ">
                         <router-link :to="{name:'my-profile'}" :class="pageActive('/myprofile')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Mi Perfil</span>
                             <span class="foto-mini foto-miPerfil"></span>
                         </router-link>
                         <hr>
-                    </div>
+                    </div>                    
                         <!-- Menu Anuncios -->
                     <div v-on:click="show=!show; ">
                         <router-link :to="{name:'all-adverts'}" :class="pageActive('/alladverts')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
