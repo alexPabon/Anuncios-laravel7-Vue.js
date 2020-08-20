@@ -60,6 +60,12 @@ Vue.component('selectCategories-component',require('./components/category/Select
 // vista de contacto
 Vue.component('contact-view',require('./views/contact/ContactView.vue').default);
 
+// COMMENTS components and view
+Vue.component('commentary-component', require('./components/comments/CommentaryComponent.vue').default);
+Vue.component('form-component', require('./components/comments/FormComponent.vue').default);
+Vue.component('comments-view', require('./views/comments/allCommentsView.vue').default);
+
+
 // Vista cuando no coincide la direccion
 Vue.component('nofund-view',require('./views/NoFoundView.vue').default);
 

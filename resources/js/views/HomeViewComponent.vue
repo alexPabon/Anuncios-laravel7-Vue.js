@@ -5,7 +5,7 @@
             class="pt-5 bg_blue_header">
             <h1 class="text-center h3">Vende todo lo que quieras</h1>            
         </div>
-        <div class="container">
+        <div v-if="!isAuthenticated" class="container">
             <p class="lead px-2 m-0">
                 Para poder publicar tus anuncios, es necesario estar registrado.<br>
                 Lo puedes hacer en el siguiente enlace: <a href="/register">Registrarse</a>

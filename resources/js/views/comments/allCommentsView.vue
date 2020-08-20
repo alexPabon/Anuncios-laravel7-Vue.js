@@ -1,10 +1,18 @@
 <template>        
     <div id="coment" class="bg-indigo bg-gradient hg-10-container px-2 py-4">                    
-        <h2 class="text-center bg-gradient p-3 badge-pill">CRUD para subir Comentarios</h2>        
+        <h2 class="text-center bg-gradient p-3 badge-pill">Comentarios</h2>
+        <div class="container pt-2">
+            <p class="lead">
+                ¿Te gusta el diseño y funcionamiento de nuestra web?<br><br>
+                Escribe tu opinión sobre que te ha parecido la aplicación o una sugerencia en que se puede mejorar.
+            </p>
+        </div>
+        <!-- Añadir nuevo comentario -->
         <form-component
-            @new="addThought">            
+            @new="addcommentary">            
         </form-component>         
-        <div v-if="isAuthenticated"> 
+        <div v-if="isAuthenticated">
+            <!-- Paginacion  -->
             <div class="container">
                 <nav aria-label="Page navigation">                    
                     <ul class="pagination mt-2">
@@ -33,23 +41,21 @@
                     <p class="p-0 m-0 lead font-weight-bold">Comentario: {{from}} de {{total}}</p>   
                 </nav>                    
             </div> 
-                      
+            <!-- Todos los comentarios -->
             <transition-group name="slide-fade">                   
-                <thought-component                
-                    v-for="(thought,index) in thoughts" 
-                    :key="thought.id"
-                    :thought="thought"                                              
-                    @delete="deleteThought(index, ...arguments)">
-                </thought-component>                                            
+                <commentary-component                
+                    v-for="(commentary,index) in comments" 
+                    :key="commentary.id"
+                    :commentary="commentary"                                              
+                    @delete="deletecommentary(index, ...arguments)">
+                </commentary-component>                                            
             </transition-group> 
             <div align="center">{{msnErro}}</div>          
             <infinite-loading @infinite="infiniteHandler">                
                 <div slot="no-more">-- No hay mas comentarios --</div>
                 <div slot="spinner">Cargando...</div>
                 <div slot="no-results">Sin resultados</div>
-            </infinite-loading>
-            <!-- <observer v-on:intersect="intersected" /> --> 
-            
+            </infinite-loading>            
         </div>
     </div>
         
@@ -61,8 +67,8 @@
         data() {
             return {
                 // array vacio de comentarios que se llenara con la respuesta get
-                thoughts:[] ,
-                thoughtsPage:[],
+                comments:[] ,
+                commentsPage:[],
                 verifyPage:false,
                 page:1,                
                 currentPage:1,                
@@ -74,40 +80,41 @@
         },        
         mounted() {
 
-            console.log('MyThoughts mounted');            
+            console.log('Comments mounted');            
         },
         methods: {
             pageCurrentActive(page){
                 return (this.currentPage==page)?['active']:'';
             },
             goPage(nPage){
-                axios.get(`/thought?page=${nPage}`)
+                axios.get(`/commentary?page=${nPage}`)
                     .then((response)=>{
-                        this.thoughts = response.data.data
+                        this.comments = response.data.data
                         this.page=nPage;
                         this.lastPage = response.data.last_page;
                         this.currentPage=response.data.current_page;                        
                         this.from= response.data.from;
                         this.total= response.data.total;
-                        this.verifyPage=true;                                            
+                        this.verifyPage=true;                        
+                        
                     })                
             },
             infiniteHandler($state) { 
                 
                 // Metodo para hacer que la pagina se recargue sin elegir pagina
-                let url = `/thought?page=${this.page++}`;             
+                let url = `/commentary?page=${this.page++}`;             
                 
                 if(this.verifyPage){
-                    this.thoughts=[];
+                    this.comments=[];
                     this.verifyPage=false;                    
                 }
 
                 axios.get(url)
                 .then(response => {
-                    let allThoughts = response.data.data;                    
+                    let allcomments = response.data.data;                    
 
-                    if(allThoughts.length){
-                        this.thoughts = this.thoughts.concat(allThoughts)
+                    if(allcomments.length){
+                        this.comments = this.comments.concat(allcomments)
                         $state.loaded()
                     }else{
                         $state.complete()
@@ -122,7 +129,7 @@
                         this.currentPage=response.data.current_page;
                     }                                                                   
                     
-                    // console.log('respuesta del servidor /thought');
+                    // console.log('respuesta del servidor /commentary');
                     // console.log(response.data);                    
                 })
                 .catch(err =>{
@@ -135,41 +142,22 @@
                         if(err.response.status==403)
                             location.replace('/home');
                     });                
-            },                    
-            intersected(){
-                // Otro metodo para que la pagina se recarge sin elegir pagina
-                /** Esta comentado el componente para que funcione, solo debe 
-                 *  actuar un metodo, intersed() o infiniteHandler($state),
-                 *  de lo contrario habra un error de duplicidad de id.
-                 */
-                console.log('enviado desde my thoughts');
-                
-                axios.get(`/thought?page=${this.page++}`)
-                .then((response)=>{
-                    this.thoughts = response.data.data
-                    console.log(this.thoughts);
-                    
-                    console.log('GET MyThoughts bajando.');
-                    // console.log(response.data);
-                    console.log(response.data.per_page);
-                                          
-                })                
-            },
-            addThought(thought){
+            },                                
+            addcommentary(commentary){
                 /** Añadir elemento al final del array */
-                // this.thoughts.push(thought);
+                // this.comments.push(commentary);
 
                 /**Añadir elemento al principio del array, se puede añadir mas de 1 elemento. */
-                this.thoughts.unshift(thought);
+                this.comments.unshift(commentary);
                 this.total++;
             },           
-            deleteThought(index,thought){
+            deletecommentary(index,commentary){
                 
-                axios.delete('/thought/'+thought)
+                axios.delete(`/commentary/${commentary}`)
                 .then((response)=>{                    
-                    this.thoughts.splice(index, 1);
+                    this.comments.splice(index, 1);
                     this.total--;
-                    console.log('DELETE MyThoughts mounted.')
+                    console.log('DELETE Mycomments mounted.')
                 });
             }           
         }

@@ -35,6 +35,12 @@ Route::post('contact','MessageContactController@store')->name('contact.store')->
 // Ruta de contacto Vue.js
 Route::get('/contact-page',function(){return view('layouts.master');});
 
+// Ruta de COMENTARIOS
+Route::apiResource('commentary','CommentaryController');
+
+// Ruta de comentarios VUE.js
+Route::get('/allcomments',function(){return view('layouts.master');});
+
 // Rutas de usuario
 Route::apiResource('user', 'UserController')->middleware('throttle:10,1');
 Route::get('user/delete/{delete}','UserController@delete')->name('user.delete')->middleware('throttle:10,1');

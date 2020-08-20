@@ -72,7 +72,7 @@
                     <div v-if="isAuthenticated" v-on:click="show=!show; ">
                         <router-link :to="{name:'my-profile'}" :class="pageActive('/myprofile')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Mi Perfil</span>
-                            <span class="foto-mini foto-plus"></span>                                                
+                            <span class="foto-mini foto-miPerfil"></span>
                         </router-link>
                         <hr>
                     </div>
@@ -97,9 +97,9 @@
                     </div>
                         <!-- Menu varios -->
                     <div v-on:click="show=!show; ">
-                        <router-link :to="{name:'menu-comments'}" :class="pageActive('/comentarios')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                        <router-link :to="{name:'all-comments'}" :class="pageActive('/allcomments')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Comentarios</span>
-                            <span class="foto-mini foto-guardar"></span>                                                
+                            <span class="foto-mini foto-comentarios"></span>                                                
                         </router-link>
                     </div>
                     <div v-on:click="show=!show; ">
@@ -249,7 +249,7 @@
         max-width: 500px;
         width: 150px;
         transform: translateX(-14%) translateY(-4%);
-        cursor:pointer;
+        cursor:pointer;        
     }
 
     .imagen{
@@ -261,6 +261,8 @@
     }    
     .foto-guardar{background-image:url('/./storage/images/guardar2.ico');}
     .foto-contact{background-image:url('/./storage/images/contacto1.ico');}
+    .foto-comentarios{background-image:url('/./storage/images/iconos/comentarios1.png');}
+    .foto-miPerfil{background-image:url('/./storage/images/iconos/perfil1.png');}
     .foto-home{background-image:url('/./storage/images/home1.png');}
     .foto-plus{background-image:url('/./storage/images/plus.png');}
     .foto-github{background-image:url('/./storage/images/Github-icon.png');}       
