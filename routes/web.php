@@ -66,6 +66,12 @@ Route::apiResource('category','CategoryController');
 // Rutas categories VUE.js
 Route::get('/categories',function(){return view('layouts.master');});
 
+// Rutas PRIVILEGES
+Route::apiResource('privilege','PrivilegeController');
+
+// rutas privileges VUE.js
+Route::get('/privileges',function(){return view('layouts.master');});
+
 // Rutas de Imagenes
 Route::apiResource('image','ImageController')->middleware('throttle:60,1');
 

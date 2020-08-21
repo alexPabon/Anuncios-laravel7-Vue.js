@@ -85,7 +85,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log('Error al cargar categorias');
       console.log(err.response);
 
-      if (err.response.status == 403) {
+      if (err.response.status == 403 || err.response.status == 401) {
         _this.errorFlag = true, _this.errorCodig = err.response.status;
         _this.errorMsn = err.response.data.message;
       }
@@ -178,7 +178,13 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Nueva categoria" },
+                    attrs: {
+                      type: "text",
+                      min: "3",
+                      max: "30",
+                      placeholder: "Nueva categoria",
+                      required: ""
+                    },
                     domProps: { value: _vm.name },
                     on: {
                       input: function($event) {

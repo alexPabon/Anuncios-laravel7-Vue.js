@@ -55,8 +55,7 @@ class CategoryController extends Controller
         $category->name= trim(Purify::clean($request->name));
 
 
-        if(!$category->save())
-            return back()->withErrors(['store'=>'No se ha podido guardar, intentelo luego']);
+        $category->save();            
 
         return $category;
     }    
@@ -65,10 +64,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\category  $category
+     * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, category $category)    
+    public function update(Request $request, Category $category)    
     {              
         if(!isAdmin(Auth::user()->privilege_id))
             abort(403,"No estas autorizado");
@@ -80,8 +79,7 @@ class CategoryController extends Controller
         
         $category->name= trim(Purify::clean($request->name));
 
-        if(!$category->update())
-            return back()->withErrors(['update'=>'No se ha podido actualizar, intentelo luego']);
+        $category->update();     
 
         return $category;
     }
@@ -89,10 +87,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\models\category  $category
+     * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(Category $category)
     {        
         if(!isAdmin(Auth::user()->privilege_id))
             abort(403,"No estas autorizado");

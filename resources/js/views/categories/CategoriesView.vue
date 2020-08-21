@@ -9,7 +9,7 @@
             <h4>Categories</h4>            
             <div class="py-2 col-12 col-md-6 col-lg-4">
                 <form v-on:submit.prevent="newCategory()" action="">
-                    <input v-model="name" type="text" class="form-control" placeholder="Nueva categoria">                    
+                    <input v-model="name" type="text" class="form-control" min="3" max="30" placeholder="Nueva categoria" required>                    
                     <button type="submit" class="btn btn-primary">Crear cátegoria</button>
                     <div>
                         <!-- Errores nueva categoria -->
@@ -76,7 +76,7 @@ export default {
                 console.log('Error al cargar categorias')
                 console.log(err.response);                
 
-                if(err.response.status==403){
+                if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,
                     this.errorCodig= err.response.status;
                     this.errorMsn= err.response.data.message;

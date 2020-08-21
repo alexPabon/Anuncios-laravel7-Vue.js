@@ -58,6 +58,9 @@ Vue.component('advertimageslist-component',require('./components/advert/AdvertIm
 Vue.component('selectCategories-component',require('./components/category/SelectCategoryComponent.vue').default);
 Vue.component('categorytable-component',require('./components/category/CategoryTableComponent.vue').default);
 
+// Privilege component
+Vue.component('privilegetable-component',require('./components/privileges/PrivilegeTableComponent.vue').default);
+
 // vista de contacto
 Vue.component('contact-view',require('./views/contact/ContactView.vue').default);
 

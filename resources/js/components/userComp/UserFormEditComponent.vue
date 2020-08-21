@@ -8,7 +8,7 @@
                     <input 
                         v-model="usuario.name" 
                         :id="['name'+usuario.id]"                        
-                        type="text" class="form-control" name="name" required>
+                        type="text" min="4" max="254" class="form-control" name="name" required>
                 </div>
                 <div class="col-12 col-md-6">
                     <label :for="['phone'+usuario.id]">Telefono</label>
@@ -65,10 +65,14 @@
                         v-if="privilegeDisable"
                         v-model="usuario.privilege_id" 
                         :id="['privi'+usuario.id]"
-                        name="privilege_id">
-                        <option value="1">Invitado</option>
-                        <option value="2">Administrador</option>                        
-                        <option value="3">Colaborador</option>
+                        name="privilege_id">                        
+                        <option
+                            v-for="privilege in privileges"
+                            :key="privilege.id" 
+                            :value="privilege.id"
+                            class="text-capitalize">
+                                {{privilege.name}}
+                        </option>
                     </select>                    
                     <small v-else class="align-self-center px-2">{{usuario.privilege.name}}</small>                    
                 </div>
@@ -101,11 +105,18 @@ export default {
             errorEmail:'',
             emailFlag:false,
             tel:false,
-            errorTel:'',                                                     
+            errorTel:'',
+            
+            /**privileges */
+            privileges:[],
         }
     },
     mounted(){
-       
+        axios.get('/privilege')
+            .then(response=>{
+                this.privileges= response.data;
+                // console.log(this.privileges);                
+            })
     },
     methods:{
         verifyAllInputs(verifyInput){            

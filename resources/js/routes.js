@@ -57,6 +57,11 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"all-categories"*/'./views/categories/CategoriesView.vue')
         },
         {
+            path:'/privileges',
+            name:'all-privileges',
+            component: ()=>import(/*webpackChunkName:"all-privileges"*/'./views/privilege/PrivilegeView.vue')
+        },
+        {
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')

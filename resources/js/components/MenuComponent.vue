@@ -66,11 +66,21 @@
                     <!-- MENÚ DE ADMINISTRADOR -->
                     <div v-if="isAdmin">
                         <div v-on:click="show=!show; ">
-                        <router-link :to="{name:'all-users'}" :class="pageActive('/users')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
-                            <span>Todos los usuarios</span>
-                            <span class="foto-mini foto-plus"></span>                                       
-                        </router-link>
-                    </div>
+                            <router-link :to="{name:'all-users'}" :class="pageActive('/users')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                                <span>Todos los usuarios</span>
+                                <span class="foto-mini foto-plus"></span>                                       
+                            </router-link>
+                        </div>
+                        <div v-on:click="show=!show; ">
+                            <router-link :to="{name:'all-categories'}" :class="pageActive('/categories')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                                <span>Cátegorias</span>                                                                    
+                            </router-link>
+                        </div>
+                        <div v-on:click="show=!show; ">
+                            <router-link :to="{name:'all-privileges'}" :class="pageActive('/privileges')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                                <span>Privilegios</span>                                                                      
+                            </router-link>
+                        </div>
                     </div>                                        
                     <div v-if="isAuthenticated" v-on:click="show=!show; ">
                         <router-link :to="{name:'my-profile'}" :class="pageActive('/myprofile')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
