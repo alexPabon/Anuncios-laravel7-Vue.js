@@ -17,8 +17,8 @@ class CategoryController extends Controller
 
     public function __construct()
     {        
-        $this->middleware('auth');
-        $this->middleware('verified');          
+        $this->middleware('auth')->except(['index']);
+        $this->middleware('verified')->except(['index']);          
     }
 
     /**
@@ -27,10 +27,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-        if(!isAdmin(Auth::user()->privilege_id))
-            abort(403,"No estas autorizado para ver este contenido");
+    {    
 
         $allCategories = Category::orderBy('id','DESC')->get();
         return $allCategories;

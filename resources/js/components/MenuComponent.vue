@@ -81,6 +81,11 @@
                                 <span>Privilegios</span>                                                                      
                             </router-link>
                         </div>
+                        <div v-on:click="show=!show; ">
+                            <router-link :to="{name:'all-visitors'}" :class="pageActive('/visitors')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                                <span>Visitantes</span>                                                                      
+                            </router-link>
+                        </div>
                     </div>                                        
                     <div v-if="isAuthenticated" v-on:click="show=!show; ">
                         <router-link :to="{name:'my-profile'}" :class="pageActive('/myprofile')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">

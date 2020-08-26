@@ -66,6 +66,16 @@ Route::apiResource('category','CategoryController');
 // Rutas categories VUE.js
 Route::get('/categories',function(){return view('layouts.master');});
 
+// Ruta VISIT
+Route::get('/visit','VisitController@updateIps');
+Route::get('/allvisit','VisitController@index_all');
+Route::get('/visit/{ip}','VisitController@showNoAuth');
+Route::get('/visitauth/{ip}','VisitController@showAuth');
+
+// ruta visit VUE.js
+Route::get('/visitors',function(){return view('layouts.master');});
+Route::get('/showip/{ip}/{auth}',function(){return view('layouts.master');});
+
 // Rutas PRIVILEGES
 Route::apiResource('privilege','PrivilegeController');
 

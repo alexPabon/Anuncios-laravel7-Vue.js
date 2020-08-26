@@ -62,6 +62,17 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"all-privileges"*/'./views/privilege/PrivilegeView.vue')
         },
         {
+            path:'/visitors',
+            name:'all-visitors',
+            component: ()=>import(/*webpackChunkName:"all-visitors"*/'./views/visit/VisitView.vue')
+        },
+        {
+            path:'/showip/:ip/:authenticated',
+            name:'show-ip',  
+            props:true,          
+            component: ()=>import(/*webpackChunkName:"show-ip"*/'./views/visit/VisitShowIp.vue')
+        },
+        {
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')

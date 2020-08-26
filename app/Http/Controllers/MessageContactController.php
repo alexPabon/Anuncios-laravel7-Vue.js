@@ -8,6 +8,7 @@ use App\Mail\MessageRecivied;
 use Illuminate\Support\Facades\Mail;
 
 use Stevebauman\Purify\Facades\Purify;
+use App\Traits\AddressIp;
 
 class MessageContactController extends Controller
 {
@@ -27,7 +28,10 @@ class MessageContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {   
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();     
+
         return view('mailContact.formContact');
     }
 
@@ -39,6 +43,9 @@ class MessageContactController extends Controller
      */
     public function store(MessageStoreRequest $storeRequest)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp(); 
+        
         $contact = env('MAIL_CONTACT');
 
         $requestClean = Purify::clean($storeRequest->post());        

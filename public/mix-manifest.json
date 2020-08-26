@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/all-categories.js": "/all-categories.js",
-    "/all-privileges.js": "/all-privileges.js"
+    "/all-privileges.js": "/all-privileges.js",
+    "/all-visitors.js": "/all-visitors.js",
+    "/show-ip.js": "/show-ip.js"
 }

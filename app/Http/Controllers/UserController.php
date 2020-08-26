@@ -14,6 +14,7 @@ use App\Policies\UserPolicy;
 
 use Stevebauman\Purify\Facades\Purify;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\AddressIp;
 
 class UserController extends Controller
 {
@@ -29,6 +30,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
         
         // Policies
         if($request->user()->cant('index',$request->user()))
@@ -93,7 +96,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserStoreRequest $request, $id)
-    { 
+    {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $user = User::find($id);
         
         if($user->email!=$request->email){
@@ -138,7 +144,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, $id)
-    {
+    {        
         $user = User::find($id);
 
         // Policies
@@ -157,6 +163,9 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)    
     { 
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+                
         $user = User::find($id);
         
         // Policies

@@ -4,82 +4,114 @@ namespace App\Http\Controllers;
 
 use App\models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\models\Consultasip;
+
+use App\Traits\PointOnMapTrait;
+use App\Traits\SavePlaceTrait;
 
 class VisitController extends Controller
-{
+{  
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }  
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_all()
     {
-        //
-    }
+        if(!isAdmin(Auth::user()->privilege_id))
+            abort(403,"No estas autorizado");
 
+        $allvisit = SavePlaceTrait::searchAllips();
+
+        return $allvisit;
+    }
+   
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function updateIps()
     {
-        //
-    }
+        if(!isAdmin(Auth::user()->privilege_id))
+            abort(403,"No estas autorizado");
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $ipAuth = Visit::select(['number_ip'])->groupBy('number_ip')->get();
+        $ipNoAuth = Consultasip::select(['number_ip','created_at'])->groupBy('number_ip')->get();
+        $allipsNoAuth = Consultasip::all();
+        $allipsAuth = Visit::all();
+
+
+        // ************ NO AUTH *****************************
+        foreach ($ipNoAuth as $value) {
+            // procedimiento para añadir ubicacion ip en un fichero JSON            
+            $verifyIp = SavePlaceTrait::verifyIp($value->number_ip);
+            
+            if(!$verifyIp){            
+                $location = PointOnMapTrait::apiResponse($value->number_ip);
+                if(!empty($location))
+                    SavePlaceTrait::saveCity($location);
+            }
+            // =======  
+        }
+
+        $complementDataNoAuth = SavePlaceTrait::complementArray($allipsNoAuth, $ipNoAuth, false);
+
+        // ********************** AUTH **************************************
+        foreach ($ipNoAuth as $value) {
+            // procedimiento para añadir ubicacion ip en un fichero JSON            
+            $verifyIp = SavePlaceTrait::verifyIp($value->number_ip);
+            
+            if(!$verifyIp){            
+                $location = PointOnMapTrait::apiResponse($value->number_ip);
+                if(!empty($location))
+                    SavePlaceTrait::saveCity($location);
+            }
+            // =======  
+        }
+
+        $complementDataAuth = SavePlaceTrait::complementArray($allipsAuth, $ipAuth, true);       
+
+        return ['update'=>'Actualizado correctamente'];
     }
+   
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\visit  $visit
+     * @param  string  $visit
      * @return \Illuminate\Http\Response
      */
-    public function show(visit $visit)
+    public function showNoAuth(string $visit)
     {
-        //
+        if(!isAdmin(Auth::user()->privilege_id))
+            abort(403,"No estas autorizado");
+
+        $numberIp = Consultasip::where('number_ip','=',$visit)->orderBy('created_at','DESC')->get();
+
+        return $numberIp;
     }
 
-    /**
-     * Show the form for editing the specified resource.
+     /**
+     * Display the specified resource.
      *
-     * @param  \App\models\visit  $visit
+     * @param  string  $visit
      * @return \Illuminate\Http\Response
      */
-    public function edit(visit $visit)
+    public function showAuth(string $visit)
     {
-        //
-    }
+        if(!isAdmin(Auth::user()->privilege_id))
+            abort(403,"No estas autorizado");
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\visit  $visit
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, visit $visit)
-    {
-        //
-    }
+        $numberIp = Visit::where('number_ip','=',$visit)->orderBy('created_at','DESC')->get();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\models\visit  $visit
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(visit $visit)
-    {
-        //
-    }
+        return $numberIp;
+    }    
 }

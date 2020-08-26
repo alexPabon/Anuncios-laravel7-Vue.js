@@ -8,6 +8,7 @@ class CreateCommentariesTable extends Migration
 {
     /**
      * Run the migrations.
+     * DataBase comments, include database/database.sqlite
      *
      * @return void
      */
@@ -28,6 +29,6 @@ class CreateCommentariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commentaries');
+        Schema::connection('comments')->dropIfExists('commentaries');
     }
 }

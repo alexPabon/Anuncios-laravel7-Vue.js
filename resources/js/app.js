@@ -61,6 +61,10 @@ Vue.component('categorytable-component',require('./components/category/CategoryT
 // Privilege component
 Vue.component('privilegetable-component',require('./components/privileges/PrivilegeTableComponent.vue').default);
 
+// VISITORS components
+Vue.component('visitlist-component',require('./components/visit/VisitListComponent.vue').default);
+Vue.component('visitrow-component',require('./components/visit/VisitRowComponent.vue').default);
+
 // vista de contacto
 Vue.component('contact-view',require('./views/contact/ContactView.vue').default);
 

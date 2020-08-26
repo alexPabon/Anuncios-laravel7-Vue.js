@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use App\Traits\AddressIp;
+
+use App\Traits\PointOnMapTrait;
+use App\Traits\SavePlaceTrait;
 
 
 class AdvertController extends Controller
@@ -28,7 +32,21 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
+        // procedimiento para añadir ubicacion ip en un fichero JSON
+        $direccionIP = $_SERVER['REMOTE_ADDR'];
+        $verifyIp = SavePlaceTrait::verifyIp($direccionIP);
+        
+        if(!$verifyIp){            
+            $location = PointOnMapTrait::apiResponse($direccionIP);
+            if(!empty($location))
+                SavePlaceTrait::saveCity($location);
+        }
+        // =======        
+
         $adverts = Advert::orderBy('id','DESC')->paginate(52);
 
         $adverts->each(function($advert){
@@ -46,6 +64,9 @@ class AdvertController extends Controller
      */
     public function index_filter($idCategory)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $adverts = Advert::orderBy('updated_at','DESC')->get();
 
         $adverts->each(function($advert){
@@ -79,6 +100,9 @@ class AdvertController extends Controller
      */
     public function myIndex()
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $adverts = Advert::orderBy('id','DESC')->where('user_id','=',Auth::user()->id)->paginate(10);
 
         $adverts->each(function($advert){
@@ -96,7 +120,10 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AdvertStoreRequest $request)
-    {       
+    {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $user = Auth::user();                       
         
         try {
@@ -164,6 +191,9 @@ class AdvertController extends Controller
      */
     public function show(Advert $advert)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $advert->categories;
         $advert->images = $advert->images()->orderBy('id','DESC')->get();
         $advert->user;
@@ -181,6 +211,9 @@ class AdvertController extends Controller
      */
     public function update(AdvertStoreRequest $request, Advert $advert)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $user = Auth::user();       
         
         try {
@@ -244,6 +277,9 @@ class AdvertController extends Controller
      */
     public function destroy(Advert $advert)
     {
+        //guarda la direccion Ip del cliente
+        AddressIp::guardarIp();
+
         $advert->images()->each(function($image){
             Storage::disk('public')->delete($image->address);
         });
