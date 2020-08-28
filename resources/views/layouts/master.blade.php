@@ -40,14 +40,15 @@
    
     </head>
     <body>
-        <div id="app">
+        <div id="app" class="hg-6-container">
             <header>
                 <menu-component titulo="{{ config('app.name', 'Laravel') }}" seemenu="true"></menu-component>
             </header>
             <div>                
                 <router-view></router-view> 
             </div>            
-        </div>
+        </div>       
+        <x-my-footer.footer />
         <!-- Scripts -->        
         <script src="{{ asset('js/app.js') }}" defer></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>    

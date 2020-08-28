@@ -10959,6 +10959,10 @@ body {
   min-height: 80vh;
 }
 
+.hg-6-container {
+  min-height: 60vh;
+}
+
 .hg-5-container {
   min-height: 50vh;
 }
@@ -11011,6 +11015,18 @@ body {
 
 .bg-light-violet {
   background: #f4f4ff;
+}
+
+.imagen_link {
+  display: block;
+  height: 100%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.hg_image {
+  height: 100px;
 }
 
 .overflow-hidden {

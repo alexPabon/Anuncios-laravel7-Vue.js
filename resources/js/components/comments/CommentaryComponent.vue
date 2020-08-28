@@ -35,9 +35,9 @@
                         </div>
                     </div>
                     <div v-else>                        
-                        <p class="text-justify px-2 lead">
-                            {{commentary.description}}
-                        </p>                                              
+                        <p
+                            v-html="comentario" 
+                            class="text-justify px-2 lead"></p>                                              
                     </div>
                     <div class="panel-footer p-2 text-center text-md-left" v-if="user.id==commentary.user_id || isAdmin">                        
                         <div v-if="editMode">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>         
     </div>
 </template>
 
@@ -71,7 +71,8 @@
                 editMode:false,
                 errores:'',
                 msn:'',
-                mostrarErrors:false,                                
+                mostrarErrors:false,
+                comentario: this.commentary.description.replace(/(\r\n|\n\r|\r|\n)/g, "<br>"),                                
             };
         },
         mounted() {
@@ -92,7 +93,8 @@
                 axios.put('/commentary/'+this.commentary.id,this.commentary)
                     .then((response)=>{                                        
                         this.commentary.description = response.data.description;                                                                                   
-                        console.log('update Mycommentary mounted.')                        
+                        this.comentario = response.data.description.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+                        console.log('update Mycommentary mounted.')                                                
                     })
                     .catch(err =>{
                         let msnErrores = err.response.data;
@@ -123,6 +125,15 @@
                         this.mostrarErrors =true;
                         this.editMode=true;
                     });                
+            },
+        },
+        watch:{
+            commentary:function(){            
+
+                // this.textDescription= this.advert.description.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+
+                this.comentario='kdkdkdkkkkkkkkkkkkkkk'
+                
             },
         }
     }

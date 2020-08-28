@@ -81,10 +81,8 @@
                 </p>                
             </div>
             <div class="bg-gradient-bottom p-2 mt-1 rounded">
-                <p>
-                    <span class="text-info">Descricción:</span><br>
-                    {{advert.description}}
-                </p>
+                <span class="text-info">Descricción:</span>
+                <p v-html="textDescription"></p>
             </div>            
         </div>
     </div>
@@ -103,11 +101,12 @@ export default {
             slider:null,
             height:null,
             width:null, 
-            posImage:0,                                   
+            posImage:0,
+            textDescription:'',
         }
     },
     mounted(){      
-
+        // this.textDescription = this.advert.description;
     },    
     methods: {
         moveSlider(pos){
@@ -131,7 +130,14 @@ export default {
                 this.moveSlider(pos);          
         },  
         
-    },      
+    },
+    watch:{
+        advert:function(){            
+
+            this.textDescription= this.advert.description.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+            
+        },
+    }     
     
 }
 </script>
