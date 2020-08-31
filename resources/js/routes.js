@@ -73,6 +73,11 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"show-ip"*/'./views/visit/VisitShowIp.vue')
         },
         {
+            path:'/porfolio',
+            name:'my-porfolio',
+            component: ()=>import(/*webpackChunkName:"my-porfolio"*/'./views/porfolio/PorfolioView.vue')
+        },
+        {
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')

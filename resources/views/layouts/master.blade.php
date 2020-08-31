@@ -32,6 +32,7 @@
         
 
         <!-- Fonts -->
+        <link rel="icon" href="/storage/images/favicon.png" type="image/x-icon">
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -40,7 +41,7 @@
    
     </head>
     <body>
-        <div id="app" class="hg-6-container">
+        <div id="app" class="hg-8-container">
             <header>
                 <menu-component titulo="{{ config('app.name', 'Laravel') }}" seemenu="true"></menu-component>
             </header>

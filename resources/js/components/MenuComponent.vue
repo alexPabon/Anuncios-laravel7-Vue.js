@@ -122,6 +122,12 @@
                         </router-link>
                     </div>
                     <div v-on:click="show=!show; ">
+                        <router-link :to="{name:'my-porfolio'}" :class="pageActive('/porfolio')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                            <span>Porfolio</span>
+                            <span class="foto-mini foto-porfolio"></span>                                                
+                        </router-link>
+                    </div>
+                    <div v-on:click="show=!show; ">
                         <router-link :to="{name:'contact'}" :class="pageActive('/contact-page')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Contacto</span>
                             <span class="foto-mini foto-contact"></span>                                                
@@ -284,7 +290,8 @@
     .foto-miPerfil{background-image:url('/./storage/images/iconos/perfil1.png');}
     .foto-home{background-image:url('/./storage/images/home1.png');}
     .foto-plus{background-image:url('/./storage/images/plus.png');}
-    .foto-github{background-image:url('/./storage/images/Github-icon.png');}       
+    .foto-github{background-image:url('/./storage/images/Github-icon.png');} 
+    .foto-porfolio{background-image: url('/./storage/images/perfil/perfil-mini.png'); border-radius: 50%;}      
 
     .btn-menu{
         position: fixed;

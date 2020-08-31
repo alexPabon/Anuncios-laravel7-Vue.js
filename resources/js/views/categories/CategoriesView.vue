@@ -7,7 +7,7 @@
         ></errors-component>
         <div v-if="!errorFlag">
             <h4>Categories</h4>            
-            <div class="py-2 col-12 col-md-6 col-lg-4">
+            <div v-if="isAdmin" class="py-2 col-12 col-md-6 col-lg-4">
                 <form v-on:submit.prevent="newCategory()" action="">
                     <input v-model="name" type="text" class="form-control" min="3" max="30" placeholder="Nueva categoria" required>                    
                     <button type="submit" class="btn btn-primary">Crear cátegoria</button>
@@ -31,7 +31,7 @@
                         <th scope="col">Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Updated at</th>
-                        <th scope="col">Options</th>
+                        <th v-if="isAdmin" scope="col">Options</th>
                         </tr>
                     </thead>
                     <tbody>

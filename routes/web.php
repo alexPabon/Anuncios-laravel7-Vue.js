@@ -82,6 +82,9 @@ Route::apiResource('privilege','PrivilegeController');
 // rutas privileges VUE.js
 Route::get('/privileges',function(){return view('layouts.master');});
 
+// Ruta POFOLIO VUE.js
+Route::get('/porfolio',function(){return view('layouts.master');});
+
 // Rutas de Imagenes
 Route::apiResource('image','ImageController')->middleware('throttle:60,1');
 

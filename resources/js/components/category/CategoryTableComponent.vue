@@ -17,7 +17,7 @@
             </div>                        
         </td>                        
         <td>{{category.updated_at}}</td>
-        <td class="text-info">
+        <td v-if="isAdmin" class="text-info">
             <span @click="edit=!edit" class="links">Edit</span>  &nbsp;    
             <span v-if="!del" @click="del=!del" class="link">Delete</span>
             <div v-if="del">

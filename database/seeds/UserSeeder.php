@@ -22,8 +22,8 @@ class UserSeeder extends Seeder
         // });
 
         factory(App\User::class,10)->create()->each(function($user){
-            factory(App\models\Advert::class,30)->create(['user_id'=>$user->id])->each(function($advert){                
-                $advert->categories()->sync([1,2,6]);
+            factory(App\models\Advert::class,15)->create(['user_id'=>$user->id])->each(function($advert){                
+                $advert->categories()->sync([1,2,6,8]);
             });
         });
     }

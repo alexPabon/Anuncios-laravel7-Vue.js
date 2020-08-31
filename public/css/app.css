@@ -10978,7 +10978,7 @@ body {
 }
 
 .bg-gradient-bottom {
-  background: linear-gradient(3deg, black, transparent);
+  background: linear-gradient(2deg, black, transparent);
 }
 
 .bg-light-blue {
@@ -11010,11 +11010,11 @@ body {
 }
 
 .bg-aliceblue {
-  background: #f0f8ff;
+  background-color: #f0f8ff;
 }
 
 .bg-light-violet {
-  background: #f4f4ff;
+  background-color: #f4f4ff;
 }
 
 .imagen_link {

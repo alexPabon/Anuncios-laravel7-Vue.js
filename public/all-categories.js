@@ -155,79 +155,97 @@ var render = function() {
         ? _c("div", [
             _c("h4", [_vm._v("Categories")]),
             _vm._v(" "),
-            _c("div", { staticClass: "py-2 col-12 col-md-6 col-lg-4" }, [
-              _c(
-                "form",
-                {
-                  attrs: { action: "" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.newCategory()
-                    }
-                  }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.name,
-                        expression: "name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      min: "3",
-                      max: "30",
-                      placeholder: "Nueva categoria",
-                      required: ""
-                    },
-                    domProps: { value: _vm.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.name = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
+            _vm.isAdmin
+              ? _c("div", { staticClass: "py-2 col-12 col-md-6 col-lg-4" }, [
                   _c(
-                    "button",
+                    "form",
                     {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
+                      attrs: { action: "" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.newCategory()
+                        }
+                      }
                     },
-                    [_vm._v("Crear cátegoria")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    _vm._l(_vm.errorData, function(errors, index) {
-                      return _c(
-                        "p",
-                        { key: index, staticClass: "text-danger" },
-                        _vm._l(errors, function(error, index) {
-                          return _c("span", { key: index }, [
-                            _vm._v(_vm._s(error))
-                          ])
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.name,
+                            expression: "name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          min: "3",
+                          max: "30",
+                          placeholder: "Nueva categoria",
+                          required: ""
+                        },
+                        domProps: { value: _vm.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.name = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Crear cátegoria")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        _vm._l(_vm.errorData, function(errors, index) {
+                          return _c(
+                            "p",
+                            { key: index, staticClass: "text-danger" },
+                            _vm._l(errors, function(error, index) {
+                              return _c("span", { key: index }, [
+                                _vm._v(_vm._s(error))
+                              ])
+                            }),
+                            0
+                          )
                         }),
                         0
                       )
-                    }),
-                    0
+                    ]
                   )
-                ]
-              )
-            ]),
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", [
               _c("table", { staticClass: "table table-striped table-light" }, [
-                _vm._m(0),
+                _c("thead", { staticClass: "bg-primary" }, [
+                  _c("tr", [
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [
+                      _vm._v("Updated at")
+                    ]),
+                    _vm._v(" "),
+                    _vm.isAdmin
+                      ? _c("th", { attrs: { scope: "col" } }, [
+                          _vm._v("Options")
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -261,24 +279,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary" }, [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Updated at")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Options")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
