@@ -7,6 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Visit::class, function (Faker $faker) {
     return [
-        //
+        'number_ip'=>$faker->ipv4(),        
+        'address'=>'/alladverts',
+        'user_name'=>'carlos',
+        'email'=>'carlos@gmail.com'
     ];
 });

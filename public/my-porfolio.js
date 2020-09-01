@@ -346,7 +346,9 @@ var staticRenderFns = [
         _c("b", { staticClass: "text-primary" }, [
           _vm._v("Sistemas Operativos: ")
         ]),
-        _vm._v(" Windows, linux, Ubuntu, Debian\n            ")
+        _vm._v(
+          " Windows, linux, Ubuntu, Debian(GPIO con Python en Raspberry Pi)\n            "
+        )
       ])
     ])
   }

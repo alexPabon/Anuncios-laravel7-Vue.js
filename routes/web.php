@@ -39,7 +39,7 @@ Route::get('/contact-page',function(){return view('layouts.master');});
 Route::apiResource('commentary','CommentaryController');
 
 // Ruta de comentarios VUE.js
-Route::get('/allcomments',function(){return view('layouts.master');});
+Route::get('/the-comments',function(){return view('layouts.master');});
 
 // Rutas de usuario
 Route::apiResource('user', 'UserController')->middleware('throttle:10,1');
@@ -88,48 +88,25 @@ Route::get('/porfolio',function(){return view('layouts.master');});
 // Rutas de Imagenes
 Route::apiResource('image','ImageController')->middleware('throttle:60,1');
 
-Route::get('/prueba', function(){
-    $us = User::find(1);
-    $us->adverts;
-    $us->adverts->each(function($advert){
-        $advert->categories;
-        $advert->images = $advert->images()->orderBy('id','DESC')->get();
-    });
-    return $us;
-});
 
-Route::get('/pruebaAll',function(){
-    $users = User::all();
-    $users->each(function($user){
-        $user->adverts->each(function($advert){
-            $advert->categories;
-            $advert->images=
-            $advert->images()->orderBy('id','DESC')->first();
-        });
-    });
-
-    return $users;
-});
-
-Route::get('/advcat',function(){
-    $adv = Advert::find(7);
-
-    try {
-        $adv->categories()->attach(6);
-        $adv->categories;
-        return $adv;
-    } catch (Throwable $e) {        
-        
-        // return $e->getCode();
-        return back();
-    }            
-});
-
-Route::get('/formadd',function(){
-    return view('anunci.addform');
+Route::get('/migrate',function(){
+    Artisan::call('migrate:fresh --force');
 });
 
 Route::get('/adm',function(){
     Artisan::call('storage:link');
+})->middleware('auth');
+
+Route::get('/ip',function(){
+    dd($_SERVER['REMOTE_ADDR']);
 });
 
+Route::get('/poneren/mantenimiento',function(){
+    // Artisan::call('down',['--message'=>'Estamos realizando unos pequeños cambios, intentelo mas tarde.','--allow'=>'90.68.219.200']);
+   return view('layouts.master');
+});
+
+Route::get('/poneren/operativo',function(){
+    // Artisan::call('up');
+    return view('layouts.master');
+});

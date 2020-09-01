@@ -139,7 +139,7 @@
                         this.currentPage=response.data.current_page;
                     }                                                                   
                     
-                    console.log('respuesta del servidor /advert');
+                    // console.log('respuesta del servidor /advert');
                     // console.log(response.data);
                     
                     this.categories=[];

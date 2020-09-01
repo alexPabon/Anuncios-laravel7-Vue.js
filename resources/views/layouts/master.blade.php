@@ -32,7 +32,7 @@
         
 
         <!-- Fonts -->
-        <link rel="icon" href="/storage/images/favicon.png" type="image/x-icon">
+        <link rel="icon" href="/storage/images/favicon.png" type="image/png">
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 

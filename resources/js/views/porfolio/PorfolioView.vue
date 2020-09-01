@@ -67,7 +67,7 @@
                     <b class="text-primary">Editores: </b> VS Code, Eclipse, Sublime
                 </p>
                 <p class="p-2 m-0">
-                    <b class="text-primary">Sistemas Operativos: </b> Windows, linux, Ubuntu, Debian
+                    <b class="text-primary">Sistemas Operativos: </b> Windows, linux, Ubuntu, Debian(GPIO con Python en Raspberry Pi)
                 </p>
             </div>
         </div>

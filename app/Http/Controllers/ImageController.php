@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\image;
+use App\models\Image;
 use Dotenv\Store\File\Paths;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\models\image  $image
+     * @param  \App\models\Image  $image
      * @return \Illuminate\Http\Response
      */
     public function destroy(image $image)

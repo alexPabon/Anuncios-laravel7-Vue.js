@@ -13,12 +13,12 @@ trait AddressIp{
     */
 	public static function guardarIp(){
 	    
-		if(Auth::user()){
-            self::guardarIpAuth();
-        }
-        else{
-            self::guardarIp_no_Auth();
-        }
+		// if(Auth::user()){
+        //     self::guardarIpAuth();
+        // }
+        // else{
+        //     self::guardarIp_no_Auth();
+        // }
         
     }
 

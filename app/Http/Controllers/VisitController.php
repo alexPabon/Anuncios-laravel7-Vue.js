@@ -44,7 +44,7 @@ class VisitController extends Controller
             abort(403,"No estas autorizado");
 
         $ipAuth = Visit::select(['number_ip'])->groupBy('number_ip')->get();
-        $ipNoAuth = Consultasip::select(['number_ip','created_at'])->groupBy('number_ip')->get();
+        $ipNoAuth = Consultasip::select(['number_ip'])->groupBy('number_ip')->get();
         $allipsNoAuth = Consultasip::all();
         $allipsAuth = Visit::all();
 
@@ -65,7 +65,7 @@ class VisitController extends Controller
         $complementDataNoAuth = SavePlaceTrait::complementArray($allipsNoAuth, $ipNoAuth, false);
 
         // ********************** AUTH **************************************
-        foreach ($ipNoAuth as $value) {
+        foreach ($ipAuth as $value) {
             // procedimiento para añadir ubicacion ip en un fichero JSON            
             $verifyIp = SavePlaceTrait::verifyIp($value->number_ip);
             
@@ -79,6 +79,7 @@ class VisitController extends Controller
 
         $complementDataAuth = SavePlaceTrait::complementArray($allipsAuth, $ipAuth, true);       
 
+        // return ['update'=>'Actualizado correctamente','auth'=>$complementDataAuth,'noAuth'=>$complementDataNoAuth];
         return ['update'=>'Actualizado correctamente'];
     }
    

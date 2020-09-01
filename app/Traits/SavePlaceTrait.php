@@ -8,10 +8,10 @@ use stdClass;
 
 class SavePlaceTrait{
 
-    protected static $file='../storage/files-ips/all-ips.json';
-    protected static $file_ip_no_Auth='../storage/files-ips/all-ips-no-Auth.json';
-    protected static $file_ip_auth='../storage/files-ips/all-ips-auth.json';
-   
+    protected static $file='files-ips/all-ips.json';
+    protected static $file_ip_no_Auth='files-ips/all-ips-no-Auth.json';
+    protected static $file_ip_auth='files-ips/all-ips-auth.json';
+    
 
     /**
      * Comprueba si la Ip existe en el fichero JSON
@@ -20,7 +20,7 @@ class SavePlaceTrait{
      * @return bool
      */
     public static function verifyIp(string $ip):bool{
-        $allIps_json = file_get_contents(self::$file);
+        $allIps_json = file_get_contents(storage_path(self::$file));
         $allips = json_decode($allIps_json);
 
         if(!empty($allips))
@@ -43,7 +43,7 @@ class SavePlaceTrait{
      */
     public static function saveCity(array $dato):bool{
         
-        $allIps_json = file_get_contents(self::$file);
+        $allIps_json = file_get_contents(storage_path(self::$file));
         $allips = json_decode($allIps_json);
 
         $saveContent['number_ip']= $dato['query'];
@@ -57,7 +57,7 @@ class SavePlaceTrait{
 
         $json = json_encode($allips);
 
-        if(file_put_contents(self::$file,$json))
+        if(file_put_contents(storage_path(self::$file),$json))
             return true;        
             
         return false;   
@@ -74,7 +74,7 @@ class SavePlaceTrait{
      * @return array
      */
     public static function complementArray(object $visitsIp, object $visitGroup, bool $isAuth=false){
-        $allIps_json = file_get_contents(self::$file);
+        $allIps_json = file_get_contents(storage_path(self::$file));
         $allips = json_decode($allIps_json);        
 
         $allipsCities = [];
@@ -121,9 +121,9 @@ class SavePlaceTrait{
         $json = json_encode($allipsCities);
 
         if($isAuth)
-            file_put_contents(self::$file_ip_auth, $json);
+            file_put_contents(storage_path(self::$file_ip_auth), $json);
         else
-            file_put_contents(self::$file_ip_no_Auth,$json);
+            file_put_contents(storage_path(self::$file_ip_no_Auth),$json);
 
         return $allipsCities;
 
@@ -136,10 +136,10 @@ class SavePlaceTrait{
      */
     public static function searchAllips(){
 
-        $allIps_no_Auth = file_get_contents(self::$file_ip_no_Auth);
+        $allIps_no_Auth = file_get_contents(storage_path(self::$file_ip_no_Auth));
         $noAuth = json_decode($allIps_no_Auth);
         
-        $allIps_Auth = file_get_contents(self::$file_ip_auth);
+        $allIps_Auth = file_get_contents(storage_path(self::$file_ip_auth));
         $allAuth = json_decode($allIps_Auth);
 
         return ['auth'=>$allAuth, 'noAuth'=>$noAuth];
