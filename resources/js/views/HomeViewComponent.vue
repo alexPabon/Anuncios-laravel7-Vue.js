@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white hg-10-container">
+    <div class="hg-10-container fondo_img">
         <div
             @click="categoryFlag=true" 
             class="pt-5 bg_blue_header">
@@ -11,12 +11,12 @@
                 Lo puedes hacer en el siguiente enlace: <a href="/register">Registrarse</a>
             </p>
         </div>
-        <h3 v-if="categoryFlag" class="m-0 pt-3 pb-2 text-secondary text-center bg-white">Algunas categorías</h3>
+        <h3 v-if="categoryFlag" class="m-0 pt-3 pb-2 text-secondary text-center">Algunas categorías</h3>
         
         <!-- Iconos de categorias -->
         <div
             v-if="categoryFlag" 
-            class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4 bg-white ">
+            class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4">
             
             <div                
                 class="d-flex flex-wrap justify-content-center align-items-center">
@@ -34,7 +34,7 @@
                 </div>
                 <router-link 
                     :to="{name:'all-adverts'}"
-                    class="col-3 col-md-3 p-0 all_categories height_content m-1 rounded text-decoration-none">
+                    class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none">
                 
                     <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                         <div class="w-100 h-50 d-flex flex-wrap justify-content-center align-items-center">
@@ -50,7 +50,7 @@
         </div>
         <div            
             v-if="!categoryFlag" 
-            class="hg-10-container bg-white">
+            class="hg-10-container">
             <div class="px-1">
                 <h4 class="text-capitalize"><span class="text-primary lead">Categoria buscada: </span>{{category}}</h4>
                 <p><span class="text-primary lead">Total: </span>{{total}}</p>
@@ -176,6 +176,13 @@ export default {
     .moda{background-image: url('/storage/images/categories/moda.png');}
     .motor{background-image: url('/storage/images/categories/motor3.png');}
     .mascota{background-image: url('/storage/images/categories/mascota.png');}
+
+    .fondo_img{
+        background-image: url('/storage/images/imgfondo/fondo1.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
     .circle{
         width: .8rem;

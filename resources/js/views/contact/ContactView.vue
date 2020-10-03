@@ -2,14 +2,14 @@
     <div class="bg-blue bg-gradient hg-10-container py-5 px-2">                           
         <h4 class="mt-3 p-2 rounded bg-gradient text-center mt-3">Formulario de contacto</h4>
         <div class="my-3">
-            <h2>contacto:</h2>
-            <form id="formContacto" autocomplete="off" class="col-12 col-sm-7 col-lg-6 mx-auto border border-light p-3 rounded" method="post" action="" v-on:submit.prevent="contactEmail()">            
+            <h2 class="col-12 col-sm-7 col-lg-6 mx-auto">contacto:</h2>
+            <form id="formContacto" autocomplete="off" class="col-12 col-sm-7 col-lg-6 mx-auto border border-secondary bg-light text-dark p-3 rounded" method="post" action="" v-on:submit.prevent="contactEmail()">            
                 <ul class="list-group p-0">
                     <li class="list-group lead">
                         <b>Alexander Pabon: alepabon@gmail.com</b><br>
                     </li>
                     <li class="list-group py-2">        			
-                        <label style="visibility: hidden;" for="nombre">Nombre</label>
+                        <label class="text-primary" style="visibility: hidden;" for="nombre">Nombre</label>
                         <input v-on:focus.passive="viewLabel('nombre')" 
                             v-on:blur.passive="verifyInput('nombre')"
                             v-model="nombre"                            
@@ -18,7 +18,7 @@
                         <small class="text-danger" v-for="nombre in errores.nombre" :key="nombre">{{nombre}}</small>
                     </li>
                     <li class="list-group py-2">
-                        <label style="visibility: hidden;" for="email">Email</label>                        
+                        <label class="text-primary" style="visibility: hidden;" for="email">Email</label>                        
                         <input v-on:focus.passive="viewLabel('email')"
                             v-on:blur.passive="verifyInput('email')"
                             v-model="email"
@@ -28,24 +28,24 @@
                     </li>
                     <li class="d-flex justify-content-between p-0 py-2">
                         <div class="col-6 list-group">
-                            <label style="visibility: hidden;" for="empresa">Empresa</label>
+                            <label class="text-primary" style="visibility: hidden;" for="empresa">Empresa</label>
                             <input v-on:focus.passive="viewLabel('empresa')" 
                                 v-on:blur.passive="verifyInput('empresa')"
                                 v-model="empresa"
-                                class="entradas bg-light form-control border-0" id="empresa" type="text" name="empresa" 
+                                class="entradas bg-light form-control" id="empresa" type="text" name="empresa" 
                                 placeholder="Empresa" value="">                            
                         </div>
                         <div class="col-6 list-group">
-                            <label style="visibility: hidden;" for="tel">Telefono</label>
+                            <label class="text-primary" style="visibility: hidden;" for="tel">Telefono</label>
                             <input v-on:focus.passive="viewLabel('tel')" 
                                 v-on:blur.passive="verifyInput('tel')"
                                 v-model="tel"
-                                class="entradas bg-light form-control border-0" id="tel" type="number" name="tel" 
+                                class="entradas bg-light form-control" id="tel" type="number" name="tel" 
                                 placeholder="Telefono" maxlength="15" value="">                            
                         </div>
                     </li>
                     <li class="list-group py-2">
-                        <label style="visibility: hidden;" for="asunto">Asunto</label>
+                        <label class="text-primary" style="visibility: hidden;" for="asunto">Asunto</label>
                         <input v-on:focus.passive="viewLabel('asunto')" 
                             v-on:blur.passive="verifyInput('asunto')"
                             v-model="asunto"
@@ -54,7 +54,7 @@
                         <small class="text-danger" v-for="asunto in errores.asunto" :key="asunto">{{asunto}}</small>
                     </li>
                     <li class="list-group py-3">
-                        <label style="visibility: hidden;" for="mensaje">Mensaje</label>
+                        <label class="text-primary" style="visibility: hidden;" for="mensaje">Mensaje</label>
                         <textarea v-on:focus.passive="viewLabel('mensaje')" 
                             v-on:blur.passive="verifyInput('mensaje')"
                             v-model="mensaje"

@@ -12,14 +12,14 @@
                     </figure>
                 </div>                
                 <!-- Datos del anuncio -->
-                <div class="px-2 d-flex justify-content-between">
-                    <span class="text-left">{{advert.city}}</span>
-                    <span class="text-right">{{advert.updated_at}}</span>
-                </div>            
-                <p class="p-0 px-1 m-0 lead">
-                    <b class="text-info">Producto:</b> {{advert.product}}<br>                    
-                </p>                
-                <p class="p-0 px-2 my-1 text-right"><small class="text-warning">{{advert.price}}€</small></p>
+                <div class="px-2 d-flex flex-wrap justify-content-between">
+                    <small class="text-left">{{advert.city}}</small>
+                    <small class="text-right">{{advert.updated_at}}</small>
+                </div>
+                <p class="p-0 m-0 px-2 lead"><small class="text-warning">{{advert.price}}€</small></p>            
+                <p class="p-0 m-0 px-2">
+                    <b class="text-info">Producto:</b> {{advert.product}}                    
+                </p>                                
             </router-link>                                
             <p class="p-0 m-0 px-2">
                 <span class="text-info">Categorias:</span>

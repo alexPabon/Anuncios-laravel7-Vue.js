@@ -7,7 +7,7 @@
             v-if="isAuthenticated && isEmailVerified" 
             class="container pt-4">
             <h1 class="text-center">Formulario para añadir anuncio</h1>
-            <div>
+            <div class="py-3">
                 <form id="formAdvert" class="border rounded" action="" v-on:submit.prevent="newAdvert" enctype="multipart/form-data">
                     <!-- PRODUCT: formulario para introducir datos -->
                     <advertform-component

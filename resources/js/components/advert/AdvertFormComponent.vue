@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="bg-light text-dark">
         <div class="form-group d-flex flex-wrap align-items-center p-1 border rounded">
             <div class="form-group col-12 col-md-6">
-                <label for="product">Producto</label>
+                <label class="text-primary" for="product">Producto</label>
                 <input
                     v-model.trim="newProduct.product"
                     v-on:blur="validateInput({'product':newProduct.product})" 
@@ -18,7 +18,7 @@
                 </small>
             </div>
             <div class="form-group col-6 col-md-3">
-                <label for="ciudad">Ciudad</label>
+                <label class="text-primary" for="ciudad">Ciudad</label>
                 <input
                     v-model.trim="newProduct.city"
                     v-on:blur="validateInput({'city':newProduct.city})"
@@ -33,7 +33,7 @@
                 </small>
             </div>
             <div class="form-group col-6 col-md-3">
-                <label for="cantidad">Cantidad</label>
+                <label class="text-primary" for="cantidad">Cantidad</label>
                 <input
                     v-model.trim="newProduct.quantity"
                     v-on:blur="validateInput({'quantity':newProduct.quantity})"
@@ -48,7 +48,7 @@
                 </small>
             </div>
             <div class="form-group col-4 col-md-3">
-                <label for="precio">Precio</label>
+                <label class="text-primary" for="precio">Precio</label>
                 <input
                     v-model.trim="newProduct.price"
                     v-on:blur="validateInput({'price':newProduct.price})"
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="form-group p-1">
-            <label for="descripcion">Descripción</label>
+            <label class="text-primary" for="descripcion">Descripción</label>
             <textarea
                 v-model.trim="newProduct.description" 
                 v-on:blur="validateInput({'description':newProduct.description})"

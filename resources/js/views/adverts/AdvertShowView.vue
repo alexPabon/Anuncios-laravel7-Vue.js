@@ -14,7 +14,7 @@
                         :advert="advert">                
                     </advertshow-component>
                     <!-- Botones de edicion y eliminado -->
-                    <div  v-if="isAdmin || user.id==advert.user_id" class="panel-footer p-2 text-center text-md-left">                                            
+                    <div  v-if="(isAdmin || user.id==advert.user_id)&&advertFlag" class="panel-footer p-2 text-center text-md-left">                                            
                         <div class="badge badge-pill badge-light d-flex col-12 col-md-5 col-lg-3 p-0 pos-relative">                            
                             <span 
                                 v-if="!deleteAdvert" 
@@ -71,6 +71,7 @@ export default {
             id: this.$route.params.id,
             advert:[],            
             viewError:false,
+            advertFlag:false,
             /**update advert */ 
             updateAdvert:false,
             activeCategories:false,
@@ -88,6 +89,7 @@ export default {
                 // console.log(response.data)
                 this.viewError=false;
                 this.advert=response.data;
+                this.advertFlag=true;
             })
             .catch(err=>{
                 console.log('hay errores')
@@ -124,7 +126,17 @@ export default {
                     setTimeout(function(){ location.replace('/alladverts') }, 2000); 
 
                 })
-        }
+                .catch(err=>{
+                console.log('hay errores')
+                // console.log(err);                
+
+                if(err.response.status===403){                    
+                    this.responseErrorMsn=err.response.data.message;
+                    this.responseErrorCodig= err.response.status;
+                    this.viewError=true;
+                }
+            });
+        },       
     }
 }
 </script>

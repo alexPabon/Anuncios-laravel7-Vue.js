@@ -116,7 +116,7 @@
                     <hr>
                         <!-- Menu varios -->
                     <div v-on:click="show=!show; ">
-                        <router-link :to="{name:'all-comments'}" :class="pageActive('/allcomments')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                        <router-link :to="{name:'all-comments'}" :class="pageActive('/the-comments')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
                             <span>Comentarios</span>
                             <span class="foto-mini foto-comentarios"></span>                                                
                         </router-link>

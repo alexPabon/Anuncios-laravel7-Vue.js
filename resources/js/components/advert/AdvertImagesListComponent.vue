@@ -32,7 +32,7 @@ export default {
                 })
                 .catch(err=>{
                     console.log('Se produjo un error al eliminar la imagen');
-                    
+                    this.show=!this.show;                    
                 })
         },
         beforeEnter: function (el) {

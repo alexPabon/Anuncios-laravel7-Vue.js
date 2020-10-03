@@ -1,78 +1,87 @@
 <template>
     <div>
-        <h3 class="text-center pt-2">Actualizando Anuncio</h3>
-        <form id="formAdvert" class="border rounded" action="" v-on:submit.prevent="updateAdvert" enctype="multipart/form-data">
-            <!-- PRODUCT: formulario para actualizar datos -->
-            <advertform-component
-                :errors="msnErrors"
-                :viewErrors="viewErrors"
-                :newProduct="advert"
-                @save="hideSaveButton">
-            </advertform-component>
-            <!-- CATEGORIES: Componente para seleccionar las categorias -->
-            <div class="form-group py-1">
-                <selectCategories-component
-                    :closeMenu="closeMenuCategories"
-                    :restart="resetCategories"
-                    :cat="categories"
-                    @verifyCategories="verifyCategories">
-                </selectCategories-component> 
+        <!-- Componenete de errores -->
+        <errors-component
+            v-if="!seeForm"
+            :codig=responseErrorCodig
+            :mensaje=responseErrorMsn
+        ></errors-component>
+
+        <div v-if="seeForm">        
+            <h3 class="text-center pt-2">Actualizando Anuncio</h3>
+            <form id="formAdvert" class="border rounded" action="" v-on:submit.prevent="updateAdvert" enctype="multipart/form-data">
+                <!-- PRODUCT: formulario para actualizar datos -->
+                <advertform-component
+                    :errors="msnErrors"
+                    :viewErrors="viewErrors"
+                    :newProduct="advert"
+                    @save="hideSaveButton">
+                </advertform-component>
+                <!-- CATEGORIES: Componente para seleccionar las categorias -->
+                <div class="form-group py-1">
+                    <selectCategories-component
+                        :closeMenu="closeMenuCategories"
+                        :restart="resetCategories"
+                        :cat="categories"
+                        @verifyCategories="verifyCategories">
+                    </selectCategories-component> 
+                    <small 
+                        v-for="error in msnErrors.categories" :key="error"
+                        class="text-danger">
+                            - {{error}}
+                    </small>                                                      
+                </div>
+                <!-- Images mini guardadas -->            
+                <div v-if="imagesMini" class="border p-2">
+                    <p class="text-warning">Las imagenes que se eliminen, no se podrán recuperar</p>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <advertimageslist-component
+                            v-for="image in advert.images"
+                            :key="image.id"
+                            :image="image">
+                        </advertimageslist-component>
+                    </div>                
+                </div>            
+                <!-- IMAGES: Componente para añadir mas imagenes -->
+                <adveraddimage-component
+                    :deleteImages="deleteImages"
+                    @removeImages="removeImages"
+                    @addImages="addImages">
+                </adveraddimage-component>                    
                 <small 
-                    v-for="error in msnErrors.categories" :key="error"
-                    class="text-danger">
+                    v-for="error in errorImage" :key="error"
+                    class="text-danger d-block">
                         - {{error}}
-                </small>                                                      
-            </div>
-            <!-- Images mini guardadas -->            
-            <div v-if="imagesMini" class="border p-2">
-                <p class="text-warning">Las imagenes que se eliminen, no se podrán recuperar</p>
-                <div class="d-flex flex-wrap align-items-center">
-                    <advertimageslist-component
-                        v-for="image in advert.images"
-                        :key="image.id"
-                        :image="image">
-                    </advertimageslist-component>
-                </div>                
-            </div>            
-            <!-- IMAGES: Componente para añadir mas imagenes -->
-            <adveraddimage-component
-                :deleteImages="deleteImages"
-                @removeImages="removeImages"
-                @addImages="addImages">
-            </adveraddimage-component>                    
-            <small 
-                v-for="error in errorImage" :key="error"
-                class="text-danger d-block">
-                    - {{error}}
-            </small>
-            <!-- Respuestas de peticiones -->
-            <div>
-                <p v-if="msSuccessFlag" class="alert alert-success m-0">{{msSuccess}}</p>
-                <p v-if="msErrorFlag" class="alert alert-danger m-0">{{msError}}</p>
-            </div>                   
-            <!-- Botoes submit y cancel -->
-            <div class="py-3 bg-gradient-bottom">
-                <small v-if="validateInputs" class="text-danger d-block px-2">Faltan campos por rellenar correctamente</small>
-                <p v-if="waitingFlag" class="px-3">Actualizando <span class="waiting">...</span></p>
-                <transition name="bounce">
-                    <button 
-                        v-if="show" 
-                        v-on:click="closeMenuCategories=!closeMenuCategories"  
-                        type="submint" 
-                        class="col-11 col-md-5 col-lg-3 btn-gradient bg-primary btn btn-primary m-1">
-                            Actualizar anuncio
-                    </button>                                        
-                </transition>
-                <transition name="bounce">
-                    <span
-                        v-if="!waitingFlag"
-                        v-on:click="cancelUpdate"                        
-                        class="col-11 col-md-5 col-lg-3 btn-gradient bg-secondary btn btn-secondary m-1">
-                            Cancelar
-                    </span> 
-                </transition>               
-            </div>                                                   
-        </form>                                  
+                </small>
+                <!-- Respuestas de peticiones -->
+                <div>
+                    <p v-if="msSuccessFlag" class="alert alert-success m-0">{{msSuccess}}</p>
+                    <p v-if="msErrorFlag" class="alert alert-danger m-0">{{msError}}</p>
+                </div>                   
+                <!-- Botoes submit y cancel -->
+                <div class="py-3 bg-gradient-bottom">
+                    <small v-if="validateInputs" class="text-danger d-block px-2">Faltan campos por rellenar correctamente</small>
+                    <p v-if="waitingFlag" class="px-3">Actualizando <span class="waiting">...</span></p>
+                    <transition name="bounce">
+                        <button 
+                            v-if="show" 
+                            v-on:click="closeMenuCategories=!closeMenuCategories"  
+                            type="submint" 
+                            class="col-11 col-md-5 col-lg-3 btn-gradient bg-primary btn btn-primary m-1">
+                                Actualizar anuncio
+                        </button>                                        
+                    </transition>
+                    <transition name="bounce">
+                        <span
+                            v-if="!waitingFlag"
+                            v-on:click="cancelUpdate"                        
+                            class="col-11 col-md-5 col-lg-3 btn-gradient bg-secondary btn btn-secondary m-1">
+                                Cancelar
+                        </span> 
+                    </transition>               
+                </div>                                                   
+            </form>                                  
+        </div>
     </div>
 </template>
 
@@ -81,6 +90,8 @@ export default {
     props:['advert','active'],
     data(){
         return{
+            /**ver formulario */
+            seeForm:true,
             /**Datos */
             viewErrors:false,
             msnErrors:[],
@@ -100,6 +111,9 @@ export default {
             msErrorFlag:false,
             msSuccess:'',
             msError:'',
+            /**componente de errores */
+            responseErrorCodig:'',
+            responseErrorMsn:'',
             /**botones submit cancel */
             show:true,
             validateInputs:false,
@@ -177,7 +191,13 @@ export default {
                     }
 
                     if(err.response.status==413)
-                        this.msError='La petición del navegador es demasiado grande y por ese motivo el servidor no la procesa.'
+                        this.msError='La petición del navegador es demasiado grande y por ese motivo el servidor no la procesa.';
+
+                    if(err.response.status===403){                    
+                        this.responseErrorMsn=err.response.data.message;
+                        this.responseErrorCodig= err.response.status;
+                        this.seeForm=false;
+                    }
                 })
         },
         cancelUpdate(){            

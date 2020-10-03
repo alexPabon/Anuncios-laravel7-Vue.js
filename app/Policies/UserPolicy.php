@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -100,16 +100,5 @@ class UserPolicy
 
         return $userAuth->id==$model->id || ($name=='administrador' && $label>=1000);
     }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $userAuth
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function forceDelete(User $userAuth, User $model)
-    {
-        //
-    }
+   
 }

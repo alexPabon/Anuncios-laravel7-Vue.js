@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use App\Traits\AddressIp;
+use App\Policies\AdvertPolicy;
 
 use App\Traits\PointOnMapTrait;
 use App\Traits\SavePlaceTrait;
@@ -211,10 +212,14 @@ class AdvertController extends Controller
      */
     public function update(AdvertStoreRequest $request, Advert $advert)
     {
+        // Policies
+        if($request->user()->cant('update',$advert))
+            abort('403','No Autorizado para ver Actualizar este anuncio');
+
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
-        $user = Auth::user();       
+        $user = Auth::user();         
         
         try {
 
@@ -272,11 +277,19 @@ class AdvertController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\models\Advert  $advert
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Advert $advert)
-    {
+    public function destroy(Request $request, Advert $advert)
+    {    
+        
+        //policies        
+        if($request->user()->cant('delete',$advert))
+            abort('403','No Autorizado, No puedes eliminiar este anuncio');
+        
+        return 'delte';
+            
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 

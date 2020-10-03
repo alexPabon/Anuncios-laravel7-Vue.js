@@ -19,3 +19,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+#Configuracion para modificar php.ini y me permita subir archivos
+#hasta 50Ms
+php_value upload_max_filesize 50M
+php_value post_max_size 50M

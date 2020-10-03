@@ -83,6 +83,7 @@
             <div class="bg-gradient-bottom p-2 mt-1 rounded">
                 <span class="text-info">Descricción:</span>
                 <p v-html="textDescription"></p>
+                <span class="text-warning">{{advert.price}}€</span>
             </div>            
         </div>
     </div>
@@ -300,12 +301,11 @@ export default {
     .container-btn-ampliar__content{
         display: flex;
         font-size: 13px;
-        font-weight: bold;
-        border:solid rgb(56, 54, 54) 2px;
+        font-weight: bold;        
         color: rgb(56, 54, 54);
-        background: rgba(255, 255, 255, 0.643);
-        border-radius: 0 0 0 3px;        
+        background: rgb(255, 255, 255);              
         cursor: pointer;
+        margin: .1rem;
     }
 
     @media (max-width: 600px) {
