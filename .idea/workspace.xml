@@ -4,6 +4,8 @@
     <list default="true" id="995ed5d5-7c88-44bf-811b-5b7230ddec8c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdvertController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdvertController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/Advert.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/Advert.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/all-categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/all-categories.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/all-privileges.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/all-privileges.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/all-visitors.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/all-visitors.js" afterDir="false" />
@@ -11,9 +13,16 @@
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/my-porfolio.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/my-porfolio.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/show-ip.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/show-ip.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/MenuComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MenuComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pagination/ListPageComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pagination/ListPageComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/HomeViewComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/HomeViewComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/adverts/AdvertsIndexView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/adverts/AdvertsIndexView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/files-ips/all-ips-auth.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/files-ips/all-ips-auth.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/files-ips/all-ips-no-Auth.json" beforeDir="false" afterPath="$PROJECT_DIR$/storage/files-ips/all-ips-no-Auth.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/purify/HTML/4.12.0,0764de86d2738007e82bab43249ea6bbe1614b91,1.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/purify/HTML/4.12.0,738645714f9e72289cb578ad393d87b38c2b8c82,1.ser" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,9 +136,17 @@
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
     </include_path>
   </component>
   <component name="ProjectId" id="1jhCs9MJZKKOePEhGdqnvKcuFWB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -137,7 +154,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lara8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LaraRaspb" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -160,8 +177,8 @@
       <workItem from="1604772989150" duration="934000" />
       <workItem from="1604773953744" duration="1658000" />
       <workItem from="1604778575382" duration="22000" />
-      <workItem from="1604783263146" duration="23000" />
-      <workItem from="1604845890857" duration="16000" />
+      <workItem from="1605205714831" duration="761000" />
+      <workItem from="1605775348227" duration="329000" />
     </task>
     <servers />
   </component>
@@ -169,9 +186,9 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1604845904806">
+    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1605775677971">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1604845904806" />
+    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1605775677971" />
   </component>
 </project>

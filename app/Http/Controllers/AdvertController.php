@@ -22,9 +22,12 @@ use App\Traits\SavePlaceTrait;
 
 class AdvertController extends Controller
 {
+    protected $search;
 
     public function __construct(){
         $this->middleware('auth')->except(['index','index_filter','show']);
+
+        $this->search= empty($_GET['search'])?'':$_GET['search'];
     }
 
     /**
@@ -48,13 +51,19 @@ class AdvertController extends Controller
         }
         // =======
 
-        $adverts = Advert::orderBy('id','DESC')->paginate(52);
+        $adverts = Advert::orderBy('id','DESC')
+                        ->where('city','like',"%$this->search%")
+                        ->orWhere('product','like',"%$this->search%")
+                        ->orWhere('description','like',"%$this->search%")
+                        ->paginate(20);
+        $adverts->appends('search',$this->search);
+        $adverts->links();
 
         $adverts->each(function($advert){
             $advert->categories;
             $advert->image = $advert->images()->orderBy('id','DESC')->first();
         });
-
+        
         return $adverts;
     }
 
@@ -64,7 +73,8 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index_filter($idCategory)
-    {
+    {       
+        
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
@@ -82,16 +92,14 @@ class AdvertController extends Controller
             foreach($advert->categories as $category){
                 if($category->id==$idCategory){
                     $advertFilter[]=$advert;
-                }
-
-                if($category->id==$idCategory)
-                    $categoryName = $category->name;
+                }                
             }
-            if(count($advertFilter)>=50)
+
+            if(count($advertFilter)>=40)
                 break;
         }
 
-        return ['total'=>count($advertFilter),'category'=>$categoryName,'adverts'=>$advertFilter];
+        return ['total'=>count($advertFilter),'adverts'=>$advertFilter,$adverts];
     }
 
     /**

@@ -58,11 +58,11 @@ export default {
     mounted(){
         axios.get('/allvisit')
             .then(response=>{
-                console.log('carga correcta de visitantes')                
-                this.visitors= response.data.noAuth;
+                console.log('carga correcta de visitantes');               
+                this.visitors = this.sortJSON(response.data.noAuth, 'country', 'asc');
                 this.visitorNoAuthoFlag=0;
 
-                this.visitorsAuth= response.data.auth;
+                this.visitorsAuth= this.sortJSON(response.data.auth,'country','asc');
                 this.visitorAuthFlag= 1;
             })
             .catch(err=>{
@@ -102,6 +102,21 @@ export default {
                     this.errorMsn= err.response.data.message;
                 }
             })
+        },
+        sortJSON(data, key, orden) {
+            // Ordena objeto JSON
+            return data.sort(function (a, b) {
+                var x = a[key],
+                y = b[key];
+
+                if (orden === 'asc') {                    
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                }
+
+                if (orden === 'desc') {
+                    return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+                }
+            });
         }
     }
 }

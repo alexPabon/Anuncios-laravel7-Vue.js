@@ -8,29 +8,42 @@
             </div>
         </div>               
         <!-- Categories -->
-        <div class="d-flex">
-            <div class="container text-info p-0">
-                <p class="lead m-0">Buscar por categorías en esta página</p>
-                <selectCategories-component
-                    :closeMenu="closeMenuCategories"
-                    :restart="resetCategories"
-                    :cat="categories">
-                </selectCategories-component>
-                <p class="py-2 px-3 m-0 col-9 col-md-7 col-lg-4">
-                    <span v-on:click="buscar" class="btn btn-light">Buscar</span>
-                </p>                
-            </div>
-        </div>
+        <div class="container py-3">            
+            <form action="" class="col-12 col-md-6 rounded py-1 px-2 bg_form">
+                <label class="text-info text-bold lead" for="search">Buscar</label>
+                <input
+                    v-on:keyup="buscar" 
+                    v-model.trim="search" 
+                    autocomplete="off"
+                    class="form-control" id="search" type="text">
+            </form>
+        </div>  
         
        <!-- Paginacion -->       
-        <listpage-component
+        <!-- <listpage-component
             :lastPage=lastPage
             :from=from
             :total=total
             :tablePos=nameTable
             :currentPage=currentPage
             @goToPage="goPage"
-        ></listpage-component>
+        ></listpage-component> -->
+
+        <!-- nueva paginación -->
+        <div v-if="paginationFlag">
+            <builderlinks-component
+            :objeto=builder_links
+            :builderFlag=builderFlag
+            :search="search"
+            :from=from
+            :tot=total 
+            :to=to                                   
+            @goToPage="goPage"></builderlinks-component>
+        </div>
+        <div v-if="!paginationFlag" class="container text-warning lead">
+            <p>No hay resultados!</p>    
+        </div>        
+        <!-- fin paginacion -->
         <!-- boton nuevo anuncio -->
         <div v-if="isAuthenticated" class="text-right px-4 pos-relative">
             <router-link :to="{name:'add-advert'}" class="text-decoration-none text-light">
@@ -38,9 +51,9 @@
             </router-link>
         </div>        
         <!-- Adverts -->
-        <div>
+        <div class="container">
             <div class="d-flex">
-                <transition-group class="d-flex flex-wrap justify-content-around align-items-stretch w-100" name='slide-fade'>               
+                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
                     <advertslist-component
                         v-for="(advert) in adverts"
                         :key="advert.id"                        
@@ -53,7 +66,7 @@
                 <div slot="spinner">Cargando...</div>
                 <div slot="no-results">Sin resultados</div>
             </infinite-loading>            
-        </div>
+        </div>        
     </div>
 </template>
 
@@ -62,15 +75,25 @@
         data(){
             return{
                 adverts:[],
-                verifyPage:false,
+
+                // constructor de enlaces
+                builder_links:{'lastPage':1,'currentPage':1,'path':'null'},
+                builderFlag:true,
+                paginationFlag:true,
+                
+                // Buscador
+                search:'',
+
                 responseSuccess:true,
                 colors:true,
-                page:1,
+                page:'/advert?page=1',
                 currentPage:1,
                 lastPage:1,
                 nameTable:'Anuncios',
                 from:'',
                 total:'',
+                to:'',
+                path:'elcaminio',
                 msnError:'',
                 responseErrorMsn:'',
                 responseErrorCodig:'',
@@ -89,101 +112,103 @@
                 return (this.currentPage==page)?['active']:'';
             },
             goPage(nPage){
-                axios.get(`/advert?page=${nPage}`)
-                    .then(response=>{
-                        console.log('respusta advert')
-                        console.log(response);
-                        this.adverts = response.data.data
-                        this.page = nPage;
-                        this.lastPage = response.data.last_page;
-                        this.currentPage = response.data.current_page;
-                        this.from = response.data.from;
-                        this.total = response.data.total;
-                        this.verifyPage = true;
+                
+                this.paginationFlag=true;
 
-                        this.categories=[];
-                        this.closeMenuCategories=!this.closeMenuCategories;
-                        this.resetCategories=!this.resetCategories;
+                if(nPage!='null'){
+                    axios.get(nPage)
+                        .then(response=>{
+                            console.log('respuesta advert')
+                            // console.log(response);
+                            this.adverts = response.data.data
+                            this.page = response.data.next_page_url;
+                            this.lastPage = response.data.last_page;
+                            this.currentPage = response.data.current_page;
+                            this.from = response.data.from;
+                            this.total = response.data.total;
+                            this.to = response.data.to;
+                            
+                            this.builder_links.lastPage=response.data.last_page;
+                            this.builder_links.currentPage = response.data.current_page;
+                            this.builder_links.path = response.data.path;
+                            this.builderFlag = !this.builderFlag;
 
-                        // console.log(response);
-                    })
+                            this.categories=[];
+                            this.closeMenuCategories=!this.closeMenuCategories;
+                            this.resetCategories=!this.resetCategories;                            
+
+                            if(!response.data.data.length)
+                                this.paginationFlag=false;
+
+                            // console.log(response);                                                       
+                        })
+                }
             },
             infiniteHandler($state) { 
                 
                 // Metodo para hacer que la pagina se recargue sin elegir pagina
-                let url = `/advert?page=${this.page++}`;             
-                
-                if(this.verifyPage){
-                    this.adverts=[];
-                    this.verifyPage=false;                    
-                }
+                let url = this.page;                            
 
                 axios.get(url)
-                .then(response => {
-                    let allAdverts = response.data.data;                    
+                    .then(response => {
+                        let allAdverts = response.data.data;                    
+                        
+                        if(allAdverts.length){
+                            this.adverts = this.adverts.concat(allAdverts)
+                            $state.loaded()
+                        }else{
+                            $state.complete()                        
+                        }                                       
+                        
+                        // Modifamos los valores con los de response.data
+                        this.lastPage = response.data.last_page;                    
+                        this.total= response.data.total;
+                        this.page = response.data.next_page_url; 
+                        this.to = response.data.to;
+                        if(response.data.current_page<=response.data.last_page){
+                            this.from= response.data.from;
+                            this.currentPage=response.data.current_page;
+                        }
+                        
+                        this.builder_links.lastPage=response.data.last_page;
+                        this.builder_links.currentPage = response.data.current_page;
+                        this.builder_links.path = response.data.path;
+                        this.builderFlag = !this.builderFlag;  
+                        
+                        // console.log('respuesta del servidor /advert');
+                        // console.log(response.data);
+                        
+                        this.categories=[];
+                        this.closeMenuCategories=!this.closeMenuCategories;
+                        this.resetCategories=!this.resetCategories;
+                    })
+                    .catch(err =>{
+                            $state.complete()                            
+                            if(typeof(err.response) !=='undefined'){
+                                let msnErrores = err.response.data;
+                                console.log('errores al cargar usuarios');                        
+                                console.log(msnErrores);                         
+                                this.msnErro='Error al cargar los usuarios';
+                                this.msnErro+=err.response.data.message;
+                                this.responseErrorMsn=err.response.data.message;
+                                this.responseErrorCodig=err.response.status; 
+                                this.viewError=true; 
+                                this.responseSuccess=false;                     
 
-                    if(allAdverts.length){
-                        this.adverts = this.adverts.concat(allAdverts)
-                        $state.loaded()
-                    }else{
-                        $state.complete()                        
-                    } 
-                    
-                    
-                    
-                    // Modifamos los valores con los de response.data
-                    this.lastPage = response.data.last_page;                    
-                    this.total= response.data.total;                    
-                    if(response.data.current_page<=response.data.last_page){
-                        this.from= response.data.from;
-                        this.currentPage=response.data.current_page;
-                    }                                                                   
-                    
-                    // console.log('respuesta del servidor /advert');
-                    // console.log(response.data);
-                    
-                    this.categories=[];
-                    this.closeMenuCategories=!this.closeMenuCategories;
-                    this.resetCategories=!this.resetCategories;
-                })
-                .catch(err =>{
-                        let msnErrores = err.response.data;
-                        console.log('errores al cargar usuarios');                        
-                        console.log(msnErrores);                         
-                        this.msnErro='Error al cargar los usuarios';
-                        this.msnErro+=err.response.data.message;
-                        this.responseErrorMsn=err.response.data.message;
-                        this.responseErrorCodig=err.response.status; 
-                        this.viewError=true; 
-                        this.responseSuccess=false;                     
+                                // if(err.response.status==403)
+                                //     location.replace('/home');
 
-                        // if(err.response.status==403)
-                        //     location.replace('/home');
-
-                        // if(err.response.status==429)
-                        //     location.replace('/home');
-                    });                
-            },
-            buscar(){
-
-                this.closeMenuCategories=!this.closeMenuCategories;
-                console.log(this.categories);
-                let filteredCategory=[]
-                let filterId=[];
-                this.adverts.forEach(advert => {
-                    advert.categories.forEach(category => {
-                        this.categories.forEach(catSearch => {
-                            if(category.id==catSearch){
-                                if(filterId.indexOf(advert.id)===-1){
-                                    filterId.push(advert.id);
-                                    filteredCategory.push(advert);       
-                                }                         
+                                // if(err.response.status==429)
+                                //     location.replace('/home');
                             }
-                        });
-                    });
-                });
-                    console.log(filterId);
-                this.adverts= filteredCategory;
+                        });  
+                                      
+            },
+            buscar(){              
+
+                let url = '/advert?search='+this.search;
+                this.goPage(url);
+
             }
         }
     }
@@ -209,5 +234,9 @@
 
     .bg-index-Adverts{
         background: #074e64;
+    }
+
+    .bg_form{
+        background: #3490dc57;
     }    
 </style>
