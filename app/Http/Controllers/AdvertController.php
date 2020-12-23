@@ -21,7 +21,7 @@ use App\Traits\SavePlaceTrait;
 
 
 class AdvertController extends Controller
-{    
+{
 
     public function __construct(){
         $this->middleware('auth')->except(['index','index_filter','show']);
@@ -33,20 +33,20 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
         // procedimiento para añadir ubicacion ip en un fichero JSON
         $direccionIP = $_SERVER['REMOTE_ADDR'];
         $verifyIp = SavePlaceTrait::verifyIp($direccionIP);
-        
-        if(!$verifyIp){            
+
+        if(!$verifyIp){
             $location = PointOnMapTrait::apiResponse($direccionIP);
             if(!empty($location))
                 SavePlaceTrait::saveCity($location);
         }
-        // =======        
+        // =======
 
         $adverts = Advert::orderBy('id','DESC')->paginate(52);
 
@@ -81,7 +81,7 @@ class AdvertController extends Controller
         foreach ($adverts as $advert) {
             foreach($advert->categories as $category){
                 if($category->id==$idCategory){
-                    $advertFilter[]=$advert;                                       
+                    $advertFilter[]=$advert;
                 }
 
                 if($category->id==$idCategory)
@@ -92,8 +92,8 @@ class AdvertController extends Controller
         }
 
         return ['total'=>count($advertFilter),'category'=>$categoryName,'adverts'=>$advertFilter];
-    } 
-    
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -112,7 +112,7 @@ class AdvertController extends Controller
         });
 
         return $adverts;
-    } 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -125,14 +125,14 @@ class AdvertController extends Controller
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
-        $user = Auth::user();                       
-        
+        $user = Auth::user();
+
         try {
 
-            DB::beginTransaction();               
-            
+            DB::beginTransaction();
+
             $cleanRequest = Purify::clean($request->post());
-        
+
             $newProduct = new Advert();
             $newProduct->city= trim($cleanRequest['city']);
             $newProduct->product= trim($cleanRequest['product']);
@@ -141,47 +141,47 @@ class AdvertController extends Controller
             $newProduct->price= round(floatval($cleanRequest['price']),2);
             $newProduct->user_id= $user->id;
 
-            $newProduct->save();       
-            
-            $newsImages = $request->images;           
-            
-            $newProduct->categories()->sync($cleanRequest['categories']);            
+            $newProduct->save();
 
-            if(!empty($newsImages)){                   
-                
+            $newsImages = $request->images;
+
+            $newProduct->categories()->sync($cleanRequest['categories']);
+
+            if(!empty($newsImages)){
+
                 foreach ($newsImages as $valueImage) {
-                        
+
                     $ancho = intval(getimagesize($valueImage)[0]);
                     $alto = intval(getimagesize($valueImage)[1]);
-                    $nameImage = Str::random(50).'.jpg';                    
-                    
-                    
+                    $nameImage = Str::random(50).'.jpg';
+
+
                     if($ancho>=640||$alto>=640){
-                        
-                        $imgResize= Image::resize_img($valueImage);                                            
+
+                        $imgResize= Image::resize_img($valueImage);
                         $path = Storage::disk('public')->put("images/tablon/$nameImage",$imgResize->stream());
 
                     }else{
-                        
+
                         $imgResize = Image::encode_jpg($valueImage);
                         $path = Storage::disk('public')->put("images/tablon/$nameImage",$imgResize->stream());
-                    }                   
-                
+                    }
+
                     $image = new Image();
                     $image->address= "/images/tablon/$nameImage";
                     $image->advert_id = $newProduct->id;
                     $image->save();
-                }              
+                }
             }
 
             DB::commit();
             return ['success'=>'Se ha guardado Correctamente','id_produ'=>$newProduct->id];
-            
+
         } catch (\Throwable $th) {
             DB::rollback();
             return ['errors'=>$th->getMessage()];
-            
-        }        
+
+        }
     }
 
     /**
@@ -198,10 +198,10 @@ class AdvertController extends Controller
         $advert->categories;
         $advert->images = $advert->images()->orderBy('id','DESC')->get();
         $advert->user;
-        
+
         return $advert;
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -219,12 +219,12 @@ class AdvertController extends Controller
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
-        $user = Auth::user();         
-        
+        $user = Auth::user();
+
         try {
 
-            DB::beginTransaction();               
-            
+            DB::beginTransaction();
+
             $advert->city= trim(Purify::clean($request->city));
             $advert->product= trim(Purify::clean($request->product));
             $advert->description= trim(Purify::clean($request->description));
@@ -232,46 +232,46 @@ class AdvertController extends Controller
             $advert->price= round(floatval(Purify::clean($request->price)),2);
 
             $advert->update();
-            
-            $newsImages = $request->images;           
-            
-            $advert->categories()->sync($request->categories);            
 
-            if(!empty($newsImages)){                   
-                
+            $newsImages = $request->images;
+
+            $advert->categories()->sync($request->categories);
+
+            if(!empty($newsImages)){
+
                 foreach ($newsImages as $valueImage) {
-                        
+
                     $ancho = intval(getimagesize($valueImage)[0]);
                     $alto = intval(getimagesize($valueImage)[1]);
-                    $nameImage = Str::random(50).'.jpg';                    
-                    
-                    
+                    $nameImage = Str::random(50).'.jpg';
+
+
                     if($ancho>=640||$alto>=640){
-                        
-                        $imgResize= Image::resize_img($valueImage);                                            
+
+                        $imgResize= Image::resize_img($valueImage);
                         $path = Storage::disk('public')->put("images/tablon/$nameImage",$imgResize->stream());
 
                     }else{
-                        
+
                         $imgResize = Image::encode_jpg($valueImage);
                         $path = Storage::disk('public')->put("images/tablon/$nameImage",$imgResize->stream());
-                    }                   
-                
+                    }
+
                     $image = new Image();
                     $image->address= "/images/tablon/$nameImage";
                     $image->advert_id = $advert->id;
                     $image->save();
-                }              
+                }
             }
 
             DB::commit();
             return ['success'=>'Se ha actualizado Correctamente','id_produ'=>$advert->id];
-            
+
         } catch (\Throwable $th) {
             DB::rollback();
             return ['errors'=>$th->getMessage()];
-            
-        }       
+
+        }
     }
 
     /**
@@ -282,14 +282,12 @@ class AdvertController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Advert $advert)
-    {    
-        
-        //policies        
+    {
+
+        //policies
         if($request->user()->cant('delete',$advert))
             abort('403','No Autorizado, No puedes eliminiar este anuncio');
-        
-        return 'delte';
-            
+
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
@@ -300,7 +298,7 @@ class AdvertController extends Controller
         if(!$advert->delete())
             return back()->withErrors(['delete'=>'No se ha podido borrar, intentelo luego']);
 
-        
-        return ['success'=>'Eliminado correcto'];        
+
+        return ['success'=>'Eliminado correcto'];
     }
 }

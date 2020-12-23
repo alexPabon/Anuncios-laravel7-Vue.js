@@ -1,6 +1,9 @@
 <template>    
     <div class="bg-dark">
-        <span class="p-1 m-0 rounded bg-light btn-menu" type="button" aria-controls="navbarSupportedContent" v-on:click="show = !show; fotoPerfil=false;">           
+        <span             
+            v-on:click="show = !show; fotoPerfil=false;"                        
+            :class="[show?'border-0':'border']"
+            class="p-1 m-0 rounded bg-light btn-menu" type="button" aria-controls="navbarSupportedContent">           
             <div class="border border-primary my-1 bg-menu bg-success rounded col-12"></div>
             <div class="border border-primary my-1 bg-menu bg-success rounded col-12"></div>                      
             <div class="border border-primary my-0 bg-menu bg-success rounded col-12"></div>            

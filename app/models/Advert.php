@@ -9,7 +9,7 @@ use DateTimeInterface;
 
 class Advert extends Model
 {
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -52,7 +52,7 @@ class Advert extends Model
      */
 
     public function categories(){
-        return $this->belongsToMany(Category::class);            
+        return $this->belongsToMany(Category::class);
     }
 
     public function user(){
