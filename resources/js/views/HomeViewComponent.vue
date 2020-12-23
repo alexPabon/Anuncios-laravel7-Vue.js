@@ -21,9 +21,9 @@
             <div                
                 class="d-flex flex-wrap justify-content-center align-items-center">
                 <div
-                    v-for="category in allCategories" 
-                    :key="category.id"
-                    @click="searchByCategory(category.id)"
+                    v-for="(category, index) in allCategories" 
+                    :key="index"
+                    @click="searchByCategory(category.id,index)"
                     class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded">
                         <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                             <div
@@ -50,12 +50,12 @@
         </div>
         <div            
             v-if="!categoryFlag" 
-            class="hg-10-container">
+            class="hg-10-container container pb-2">
             <div class="px-1">
                 <h4 class="text-capitalize"><span class="text-primary lead">Categoria buscada: </span>{{category}}</h4>
                 <p><span class="text-primary lead">Total: </span>{{total}}</p>
             </div>
-            <transition-group class="d-flex flex-wrap justify-content-around align-items-stretch w-100" name='slide-fade'>               
+            <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
                 <advertslist-component
                     v-for="(advert) in adverts"
                     :key="advert.id"                        
@@ -110,12 +110,12 @@ export default {
         }
     },
     methods:{
-        searchByCategory(id){            
+        searchByCategory(id,index){            
             this.categoryFlag=false;
-            axios.get(`/indexcategory/${id}`)
+            this.category = this.allCategories[index].name;
+            axios.get(`/advertcategory/${id}`)
                 .then(response=>{
-                    this.adverts=response.data.adverts;
-                    this.category= response.data.category;
+                    this.adverts=response.data.adverts;                    
                     this.total= response.data.total;                    
                     console.log('filtrando por categorias')
                     console.log(response.data)

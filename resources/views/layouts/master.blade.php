@@ -37,14 +37,15 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{asset('./css/app.css')}}">        
+        <link rel="stylesheet" href="{{asset('./css/app.css')}}">      
+       
    
     </head>
     <body>
         <div id="app" class="hg-8-container">
             <header>
                 <menu-component titulo="{{ config('app.name', 'Laravel') }}" seemenu="true"></menu-component>
-            </header>
+            </header>            
             <div>                
                 <router-view></router-view> 
             </div>            
@@ -52,6 +53,6 @@
         <x-my-footer.footer />
         <!-- Scripts -->        
         <script src="{{ asset('js/app.js') }}" defer></script> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>          
     </body>
 </html>

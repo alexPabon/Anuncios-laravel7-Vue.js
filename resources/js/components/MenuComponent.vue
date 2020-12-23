@@ -10,7 +10,12 @@
         </span>        
         <div v-if="!show" class="p-0 m-0 bg-light position-fixed fixed-top">
             <!-- Barra superior -->
-            <div class="d-flex p-0 m-0 justify-content-end align-content-center">
+            <div class="d-flex p-0 m-0 py-1 justify-content-end align-content-center">
+                <div class="p-0 col-2 col-md-4 col-lg-5 justify-content-start">
+                    <div @mouseover="show=true" class="col-4 h-100 text-center text_menu">                                 
+                        <span>Menú</span>
+                    </div> 
+                </div>                
                 <div v-on:click="updatePage">
                     <router-link v-if="seemenu" :to="{name:'menu-home'}" class="mr-3"> 
                         <span>Inicio</span>                   
@@ -345,6 +350,19 @@
         width: 20px;
         height:20px; 
         cursor: pointer;                  
+    }
+
+    .text_menu:hover{
+        background: #32015f;
+        padding: 0 15px;
+        border-radius: 2rem;
+        color:white;
+    }
+
+    @media (max-width: 780px) {
+        .text_menu {
+            display: none;
+        }
     }
 
 </style>

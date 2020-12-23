@@ -83,6 +83,10 @@ Vue.component('infinite-loading', require('vue-infinite-loading').default);
 // Errors component
 Vue.component('errors-component', require('./components/errors/ErrorsComponent.vue').default);
 
+// Builder links
+Vue.component('link-component',require('./links/LinkComponent.vue').default);
+Vue.component('builderlinks-component',require('./links/BuilderLinksComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

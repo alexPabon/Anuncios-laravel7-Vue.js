@@ -38,16 +38,16 @@ export default {
             // lastPage:5,
             // from:1,
             // total:15,
-            // currentPage:2
+            Page:11
         }
-    },
+    },   
     methods:{
         pageCurrentActive(page){
             return (this.currentPage==page)?['active']:'';
         },
         goTo(pag){
             this.$emit('goToPage',pag);
-        }
+        },       
     }
 }
 </script>

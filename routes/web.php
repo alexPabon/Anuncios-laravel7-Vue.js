@@ -52,7 +52,7 @@ Route::get('/myprofile',function(){return view('layouts.master');});
 // Rutas de adverts
 Route::apiResource('advert','AdvertController');
 Route::get('/myindex','AdvertController@myIndex');
-Route::get('/indexcategory/{category}','AdvertController@index_filter');
+Route::get('/advertcategory/{category}','AdvertController@index_filter')->name('indexFilter');
 
 // Rutas de adverts vue.js
 Route::get('/alladverts',function(){return view('layouts.master');});
