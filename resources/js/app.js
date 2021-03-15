@@ -97,13 +97,17 @@ import auth from './mixins/auth';
 import imagesAddress from './mixins/imagesAddress';
 import router from './routes';
 import $ from 'jquery-validation';
-import { BootstrapVue} from 'bootstrap-vue'
+import { BootstrapVue} from 'bootstrap-vue';
+
+import GSAP from './GSAP';
+import Vue from 'vue';
 
 Vue.use(BootstrapVue)
 
 
 Vue.mixin(auth);
 Vue.mixin(imagesAddress);
+Vue.mixin(GSAP);
 
 const app = new Vue({
     el: '#app',

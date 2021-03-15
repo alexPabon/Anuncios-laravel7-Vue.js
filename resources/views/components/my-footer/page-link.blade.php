@@ -3,7 +3,7 @@
         href="{{$url}}" 
         target="_blank" 
         style="background-image: url({{$imgUrl}})"
-        class="border border-secondary imagen_link bg-light d-flex align-content-center align-items-center justify-content-center rounded">
+        class="border border-secondary imagen_link bg-light d-flex align-content-center align-items-center justify-content-center rounded more_links">
             <span class="d-block text-center" >{{$titleLink}}</span>
     </a>
 </div>

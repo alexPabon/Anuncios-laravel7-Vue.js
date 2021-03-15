@@ -24,7 +24,7 @@
                     v-for="(category, index) in allCategories" 
                     :key="index"
                     @click="searchByCategory(category.id,index)"
-                    class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded">
+                    class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded link_categories">
                         <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                             <div
                                 :class="category.imageCssName" 
@@ -34,7 +34,7 @@
                 </div>
                 <router-link 
                     :to="{name:'all-adverts'}"
-                    class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none">
+                    class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none link_categories">
                 
                     <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                         <div class="w-100 h-50 d-flex flex-wrap justify-content-center align-items-center">
@@ -62,7 +62,7 @@
                     :advert="advert">
                 </advertslist-component>
             </transition-group>            
-        </div>
+        </div>       
     </div>
 
 </template>
@@ -109,6 +109,16 @@ export default {
 
         }
     },
+    mounted(){
+        let tween = gsap.from('.link_categories', {
+                duration: .7,                
+                y: -200, //'random(-500,500)',
+                scale: 0,
+                stagger: 0.7,
+                ease: 'elastic',
+                delay:.5
+            }); 
+    },
     methods:{
         searchByCategory(id,index){            
             this.categoryFlag=false;
@@ -128,7 +138,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped>   
     /** 
     * Las animaciones de entrada y salida pueden usar 
     * funciones de espera y duración diferentes.
