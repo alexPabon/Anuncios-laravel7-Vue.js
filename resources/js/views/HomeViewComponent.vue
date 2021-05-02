@@ -1,71 +1,81 @@
 <template>
-    <div class="hg-10-container fondo_img">
+    <div id="home_container">
         <div
-            @click="categoryFlag=true" 
-            class="pt-5 bg_blue_header">
-            <h1 class="text-center h3">Vende todo lo que quieras</h1>            
-        </div>
-        <div v-if="!isAuthenticated" class="container">
-            <p class="lead px-2 m-0">
-                Para poder publicar tus anuncios, es necesario estar registrado.<br>
-                Lo puedes hacer en el siguiente enlace: <a href="/register">Registrarse</a>
-            </p>
-        </div>
-        <h3 v-if="categoryFlag" class="m-0 pt-3 pb-2 text-secondary text-center">Algunas categorías</h3>
-        
-        <!-- Iconos de categorias -->
-        <div
-            v-if="categoryFlag" 
-            class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4">
-            
-            <div                
-                class="d-flex flex-wrap justify-content-center align-items-center">
-                <div
-                    v-for="(category, index) in allCategories" 
-                    :key="index"
-                    @click="searchByCategory(category.id,index)"
-                    class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded link_categories">
-                        <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
-                            <div
-                                :class="category.imageCssName" 
-                                class="w-100 h-50 bg_images_categories"></div>
-                            <p class="p-1">{{category.name}}</p>
-                        </div>                        
-                </div>
-                <router-link 
-                    :to="{name:'all-adverts'}"
-                    class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none link_categories">
-                
-                    <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
-                        <div class="w-100 h-50 d-flex flex-wrap justify-content-center align-items-center">
-                            <span class="circle"></span>
-                            <span class="circle"></span>
-                            <span class="circle"></span>
-                        </div>
-                        <p class="p-1 text-dark">Todas las categorias</p>
-                    </div>                        
-                                               
-                </router-link>                 
-            </div>
+            :class="[categoryFlag?'':'hide_element']" 
+            id="phaterCanv4">
+            <canvas id="canvas4" ref="canvas4"></canvas>
         </div>
         <div            
-            v-if="!categoryFlag" 
-            class="hg-10-container container pb-2">
-            <div class="px-1">
-                <h4 class="text-capitalize"><span class="text-primary lead">Categoria buscada: </span>{{category}}</h4>
-                <p><span class="text-primary lead">Total: </span>{{total}}</p>
+            :class="[categoryFlag?'':'fondo_img']"
+            id="icon_container"
+            class="hg-10-container">       
+            
+            <div
+                @click="categoryFlag=true;" 
+                class="pt-5 bg_blue_header">
+                <h1 class="text-center h3">Vende todo lo que quieras</h1>            
             </div>
-            <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
-                <advertslist-component
-                    v-for="(advert) in adverts"
-                    :key="advert.id"                        
-                    :advert="advert">
-                </advertslist-component>
-            </transition-group>            
-        </div>       
-    </div>
+            <div v-if="!isAuthenticated" class="container">
+                <p class="lead px-2 m-0">
+                    Para poder publicar tus anuncios, es necesario estar registrado.<br>
+                    Lo puedes hacer desde <a href="/register">Registrar</a>
+                </p>
+            </div>
+            <h3 v-if="categoryFlag" class="m-0 pt-3 pb-2 text-secondary text-center">Algunas categorías</h3>
+            
+            <!-- Iconos de categorias -->
+            <div                
+                v-if="categoryFlag" 
+                class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4">                
+                <div class="d-flex flex-wrap justify-content-center align-items-center">
+                    <div
+                        v-for="(category, index) in allCategories" 
+                        :key="index"
+                        @click="searchByCategory(category.id,index)"
+                        class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded link_categories">
+                            <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
+                                <div
+                                    :class="category.imageCssName" 
+                                    class="w-100 h-50 bg_images_categories"></div>
+                                <p class="p-1">{{category.name}}</p>
+                            </div>                        
+                    </div>
+                    <router-link 
+                        :to="{name:'all-adverts'}"
+                        class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none link_categories">
+                    
+                        <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
+                            <div class="w-100 h-50 d-flex flex-wrap justify-content-center align-items-center">
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                            </div>
+                            <p class="p-1 text-dark">Todas las categorias</p>
+                        </div>                                                
+                    </router-link>                 
+                </div>
+            </div>
 
+            <!-- Busqueda segun categoria -->
+            <div            
+                v-if="!categoryFlag" 
+                class="hg-10-container container pb-2">
+                <div class="px-1">
+                    <h4 class="text-capitalize"><span class="text-primary lead">Categoria buscada: </span>{{category}}</h4>
+                    <p><span class="text-primary lead">Total: </span>{{total}}</p>
+                </div>
+                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
+                    <advertslist-component
+                        v-for="(advert) in adverts"
+                        :key="advert.id"                        
+                        :advert="advert">
+                    </advertslist-component>
+                </transition-group>            
+            </div>       
+        </div>        
+    </div>
 </template>
+
 <script>
 export default {
     data(){
@@ -106,6 +116,7 @@ export default {
                         id:11
                     },                    
                 ],
+            myCanvas:'',
 
         }
     },
@@ -117,8 +128,11 @@ export default {
                 stagger: 0.7,
                 ease: 'elastic',
                 delay:.5
-            }); 
-    },
+            });          
+            
+        let canvas = this.$refs.canvas4; 
+        this.startDrawing(canvas);
+    },    
     methods:{
         searchByCategory(id,index){            
             this.categoryFlag=false;
@@ -133,12 +147,35 @@ export default {
                 .catch(err=>{
                     console.log('se produjo un error al solicitar por categorias')
                 })
-        }
-    }
+        },      
+        
+    },
+    beforeMount(){
+        
+    },
 }
 </script>
 
-<style scoped>   
+<style scoped>    
+
+    #phaterCanv4, #icon_container{
+        position: relative;        
+    }
+
+    .hide_element{
+        display: none;
+    }
+
+    #canvas4{
+        background-color: rgb(255, 255, 255);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-shadow: inset -1px 0px 4px 1px #62d2fc;
+    }
+
+
     /** 
     * Las animaciones de entrada y salida pueden usar 
     * funciones de espera y duración diferentes.

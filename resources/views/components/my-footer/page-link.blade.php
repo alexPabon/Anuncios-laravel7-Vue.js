@@ -1,4 +1,4 @@
-<div class="hg_image col-5 col-md-3 col-lg-2 p-0 m-1">
+<div class="hg_image col-5 col-md-3 col-lg-2 col-xl-1 p-0 m-1">
     <a 
         href="{{$url}}" 
         target="_blank" 

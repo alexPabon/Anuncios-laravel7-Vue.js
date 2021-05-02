@@ -99,6 +99,8 @@ import router from './routes';
 import $ from 'jquery-validation';
 import { BootstrapVue} from 'bootstrap-vue';
 
+import mouseOverEffect from './mixins/mouseOverEffect';
+
 import GSAP from './GSAP';
 import Vue from 'vue';
 
@@ -108,8 +110,9 @@ Vue.use(BootstrapVue)
 Vue.mixin(auth);
 Vue.mixin(imagesAddress);
 Vue.mixin(GSAP);
+Vue.mixin(mouseOverEffect);
 
 const app = new Vue({
     el: '#app',
-    router,
+    router,         
 });
