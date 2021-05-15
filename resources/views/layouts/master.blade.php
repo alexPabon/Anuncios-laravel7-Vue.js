@@ -22,13 +22,15 @@
                     imagen, sonido, juegos, alexander"
         >
         <meta name="author" content="Alexander Pabon"> 
-        <meta name="user" content="{{ $user }}">
+        <meta name="user" content="{{ $user }}">        
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{config('app.name')}} @yield('titulo')</title>
 
+        {{-- GSAP GreenShock --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
         
 
         <!-- Fonts -->

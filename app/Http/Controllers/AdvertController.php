@@ -295,7 +295,8 @@ class AdvertController extends Controller
         //policies
         if($request->user()->cant('delete',$advert))
             abort('403','No Autorizado, No puedes eliminiar este anuncio');
-
+                            
+            
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
 
