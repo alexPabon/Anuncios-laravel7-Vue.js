@@ -1,6 +1,6 @@
 <template>
-    <div class="p-1 col-6 col-md-4 col-lg-3">
-        <div class="back-color bg-gradient my-1 p-0 border h-100 rounded overflow-hidden">
+    <div class="p-1 col-6 col-md-4 col-lg-3 shadow-sm">
+        <div class="back-color bg-gradient my-1 p-0 h-100 rounded overflow-hidden">
             <router-link :to="{path:`/showadvert/${advert.id}`}" class="text-decoration-none text-light">
                 <!-- Imagen -->
                 <div class="overflow-hidden btn p-0 m-0" style="max-height:200px">
@@ -10,54 +10,26 @@
                     <figure v-if="!viewImage">
                         <img class="col-12 m-0 p-0" :src="addressDefaulth" alt="Imagen">
                     </figure>
-                </div>                
+                </div>
                 <!-- Datos del anuncio -->
                 <div class="px-2 d-flex flex-wrap justify-content-between">
                     <small class="text-left">{{advert.city}}</small>
                     <small class="text-right">{{advert.updated_at}}</small>
                 </div>
-                <p class="p-0 m-0 px-2 lead"><small class="text-warning">{{advert.price}}€</small></p>            
+                <p class="p-0 m-0 px-2 lead"><small class="text-warning">{{advert.price}}€</small></p>
                 <p class="p-0 m-0 px-2">
-                    <b class="text-info">Producto:</b> {{advert.product}}                    
-                </p>                                
-            </router-link>                                
-            <p class="p-0 m-0 px-2">
-                <span class="text-info">Categorias:</span>
-                <small
-                    v-for="category in advert.categories"
-                    :key="category.id"
-                    class="text-capitalize">
-                        {{category.name}}, 
-                </small>
-            </p>
-            <!-- Descriccion del producto colapsado -->
-            <div>
-                <div 
-                    v-if="!leer"
-                    v-on:click="leer=!leer" 
-                    class="bg-gradient" 
-                    style="position:fixed;z-index:900; width:100vw; height:100vh;top:0;left:0">
-                </div>
-
-                <div :class="[leer?'':'pos-absolute back-color bg-gradient rounded-bottom']">
-                    <div
-                        :class="[leer?'overflow-hidden mx-hg-100':'col-12']" 
-                        class="d-block p-2">
-                        <small class="text-info">Descripcion:</small>
-                        <small class="d-block p-2">
-                            {{advert.description}}
-                        </small>
-                    </div>
-                    <!-- Boton para mostra mas texto -->
-                    <p class="text-right pl-1">
-                        <span 
-                            v-on:click="leer=!leer" 
-                            class="bg-light text-dark rounded border px-2 cursor-pointer">
-                                {{leer?'Leer mas':'Cerrar'}}
-                        </span>
-                    </p>                    
-                </div>
-            </div>
+                    <b class="text-info">Producto:</b> {{advert.product}}
+                </p>
+                <p class="p-0 m-0 px-2">
+                    <span class="text-info">Categorias:</span>
+                    <small
+                        v-for="category in advert.categories"
+                        :key="category.id"
+                        class="text-capitalize">
+                        {{category.name}},
+                    </small>
+                </p>
+            </router-link>
         </div>
     </div>
 </template>
@@ -81,10 +53,10 @@ export default {
         }
     },
     methods:{
-        backgrouds(){            
-            this.viewColor=true;           
+        backgrouds(){
+            this.viewColor=true;
         }
-    },   
+    },
 }
 </script>
 

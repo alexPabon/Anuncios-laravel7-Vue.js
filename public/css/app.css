@@ -11033,6 +11033,10 @@ body {
   height: 100px;
 }
 
+.h_link {
+  height: 60px;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -11049,6 +11053,10 @@ body {
 .pos_boton_add {
   right: 2rem;
   top: -2.3rem;
+}
+
+.page-link {
+  padding: 0.1rem 0.3rem !important;
 }
 
 .mx-hg-100 {

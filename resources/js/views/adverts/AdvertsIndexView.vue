@@ -6,20 +6,20 @@
                     <div class="card-header text-center"><h3>Listado de todos los anuncios publicados</h3></div>
                 </div>
             </div>
-        </div>               
+        </div>
         <!-- Categories -->
-        <div class="container py-3">            
-            <form action="" class="col-12 col-md-6 rounded py-1 px-2 bg_form">
-                <label class="text-info text-bold lead" for="search">Buscar</label>
+        <div class="container py-3">
+            <form action="" class="col-6 col-md-3 rounded py-1 px-2 bg_form">
+                <label class="text-light text-bold lead" for="search">Buscar</label>
                 <input
-                    v-on:keyup="buscar" 
-                    v-model.trim="search" 
+                    v-on:keyup="buscar"
+                    v-model.trim="search"
                     autocomplete="off"
                     class="form-control" id="search" type="text">
             </form>
-        </div>  
-        
-       <!-- Paginacion -->       
+        </div>
+
+       <!-- Paginacion -->
         <!-- <listpage-component
             :lastPage=lastPage
             :from=from
@@ -36,37 +36,43 @@
             :builderFlag=builderFlag
             :search="search"
             :from=from
-            :tot=total 
-            :to=to                                   
+            :tot=total
+            :to=to
             @goToPage="goPage"></builderlinks-component>
         </div>
         <div v-if="!paginationFlag" class="container text-warning lead">
-            <p>No hay resultados!</p>    
-        </div>        
+            <p>No hay resultados!</p>
+        </div>
         <!-- fin paginacion -->
         <!-- boton nuevo anuncio -->
         <div v-if="isAuthenticated" class="text-right px-4 pos-relative">
             <router-link :to="{name:'add-advert'}" class="text-decoration-none text-light">
-                <span class="btn btn-success text-bold lead pos-absolute pos_boton_add" title="Añadir nuevo anuncio">+</span>
+                <span class="btn btn-success text-bold lead pos-absolute pos_boton_add" data-toggle="tooltip" data-placement="left"  title="Añadir nuevo anuncio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </span>
             </router-link>
-        </div>        
+
+        </div>
         <!-- Adverts -->
         <div class="container">
             <div class="d-flex">
-                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
+                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>
                     <advertslist-component
                         v-for="(advert) in adverts"
-                        :key="advert.id"                        
+                        :key="advert.id"
                         :advert="advert">
                     </advertslist-component>
                 </transition-group>
             </div>
-            <infinite-loading @infinite="infiniteHandler">                
+            <infinite-loading @infinite="infiniteHandler">
                 <div slot="no-more">-- No hay mas Anuncios --</div>
                 <div slot="spinner">Cargando...</div>
                 <div slot="no-results">Sin resultados</div>
-            </infinite-loading>            
-        </div>        
+            </infinite-loading>
+        </div>
     </div>
 </template>
 
@@ -80,7 +86,7 @@
                 builder_links:{'lastPage':1,'currentPage':1,'path':'null'},
                 builderFlag:true,
                 paginationFlag:true,
-                
+
                 // Buscador
                 search:'',
 
@@ -106,13 +112,16 @@
         },
         mounted() {
             console.log('Component index adverts mounted.')
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
         },
-        methods:{                      
+        methods:{
             pageCurrentActive(page){
                 return (this.currentPage==page)?['active']:'';
             },
             goPage(nPage){
-                
+
                 this.paginationFlag=true;
 
                 if(nPage!='null'){
@@ -127,7 +136,7 @@
                             this.from = response.data.from;
                             this.total = response.data.total;
                             this.to = response.data.to;
-                            
+
                             this.builder_links.lastPage=response.data.last_page;
                             this.builder_links.currentPage = response.data.current_page;
                             this.builder_links.path = response.data.path;
@@ -135,65 +144,65 @@
 
                             this.categories=[];
                             this.closeMenuCategories=!this.closeMenuCategories;
-                            this.resetCategories=!this.resetCategories;                            
+                            this.resetCategories=!this.resetCategories;
 
                             if(!response.data.data.length)
                                 this.paginationFlag=false;
 
-                            // console.log(response);                                                       
+                            // console.log(response);
                         })
                 }
             },
-            infiniteHandler($state) { 
-                
+            infiniteHandler($state) {
+
                 // Metodo para hacer que la pagina se recargue sin elegir pagina
-                let url = this.page;                            
+                let url = this.page;
 
                 axios.get(url)
                     .then(response => {
-                        let allAdverts = response.data.data;                    
-                        
+                        let allAdverts = response.data.data;
+
                         if(allAdverts.length){
                             this.adverts = this.adverts.concat(allAdverts)
                             $state.loaded()
                         }else{
-                            $state.complete()                        
-                        }                                       
-                        
+                            $state.complete()
+                        }
+
                         // Modifamos los valores con los de response.data
-                        this.lastPage = response.data.last_page;                    
+                        this.lastPage = response.data.last_page;
                         this.total= response.data.total;
-                        this.page = response.data.next_page_url; 
+                        this.page = response.data.next_page_url;
                         this.to = response.data.to;
                         if(response.data.current_page<=response.data.last_page){
                             this.from= response.data.from;
                             this.currentPage=response.data.current_page;
                         }
-                        
+
                         this.builder_links.lastPage=response.data.last_page;
                         this.builder_links.currentPage = response.data.current_page;
                         this.builder_links.path = response.data.path;
-                        this.builderFlag = !this.builderFlag;  
-                        
+                        this.builderFlag = !this.builderFlag;
+
                         // console.log('respuesta del servidor /advert');
                         // console.log(response.data);
-                        
+
                         this.categories=[];
                         this.closeMenuCategories=!this.closeMenuCategories;
                         this.resetCategories=!this.resetCategories;
                     })
                     .catch(err =>{
-                            $state.complete()                            
+                            $state.complete()
                             if(typeof(err.response) !=='undefined'){
                                 let msnErrores = err.response.data;
-                                console.log('errores al cargar usuarios');                        
-                                console.log(msnErrores);                         
+                                console.log('errores al cargar usuarios');
+                                console.log(msnErrores);
                                 this.msnErro='Error al cargar los usuarios';
                                 this.msnErro+=err.response.data.message;
                                 this.responseErrorMsn=err.response.data.message;
-                                this.responseErrorCodig=err.response.status; 
-                                this.viewError=true; 
-                                this.responseSuccess=false;                     
+                                this.responseErrorCodig=err.response.status;
+                                this.viewError=true;
+                                this.responseSuccess=false;
 
                                 // if(err.response.status==403)
                                 //     location.replace('/home');
@@ -201,10 +210,10 @@
                                 // if(err.response.status==429)
                                 //     location.replace('/home');
                             }
-                        });  
-                                      
+                        });
+
             },
-            buscar(){              
+            buscar(){
 
                 let url = '/advert?search='+this.search;
                 this.goPage(url);
@@ -215,11 +224,11 @@
 </script>
 
 <style scoped>
-    /** 
-    * Las animaciones de entrada y salida pueden usar 
+    /**
+    * Las animaciones de entrada y salida pueden usar
     * funciones de espera y duración diferentes.
     */
-    
+
     .slide-fade-enter-active {
     transition: all .5s ease;
     }
@@ -233,10 +242,11 @@
     }
 
     .bg-index-Adverts{
-        background: #074e64;
+        background: radial-gradient(#628bcb54, #1c4b6614);
     }
 
     .bg_form{
-        background: #3490dc57;
-    }    
+        background: #071e5e;
+        color: #02f102 !important;
+    }
 </style>

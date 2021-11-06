@@ -1,19 +1,19 @@
 <template>
     <div id="home_container">
         <div
-            :class="[categoryFlag?'':'hide_element']" 
+            :class="[categoryFlag?'':'hide_element']"
             id="phaterCanv4">
             <canvas id="canvas4" ref="canvas4"></canvas>
         </div>
-        <div            
+        <div
             :class="[categoryFlag?'':'fondo_img']"
             id="icon_container"
-            class="hg-10-container">       
-            
+            class="hg-10-container">
+
             <div
-                @click="categoryFlag=true;" 
+                @click="categoryFlag=true;"
                 class="pt-5 bg_blue_header">
-                <h1 class="text-center h3">Vende todo lo que quieras</h1>            
+                <h1 class="text-center h3">Vende todo lo que quieras</h1>
             </div>
             <div v-if="!isAuthenticated" class="container">
                 <p class="lead px-2 m-0">
@@ -22,28 +22,28 @@
                 </p>
             </div>
             <h3 v-if="categoryFlag" class="m-0 pt-3 pb-2 text-secondary text-center">Algunas categorías</h3>
-            
+
             <!-- Iconos de categorias -->
-            <div                
-                v-if="categoryFlag" 
-                class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4">                
+            <div
+                v-if="categoryFlag"
+                class="pt-4 px-1 px-md-3 d-flex justify-content-center px-lg-4">
                 <div class="d-flex flex-wrap justify-content-center align-items-center">
                     <div
-                        v-for="(category, index) in allCategories" 
+                        v-for="(category, index) in allCategories"
                         :key="index"
                         @click="searchByCategory(category.id,index)"
                         class="col-3 col-md-3 p-0 bg-light height_content m-1 rounded link_categories">
                             <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                                 <div
-                                    :class="category.imageCssName" 
+                                    :class="category.imageCssName"
                                     class="w-100 h-50 bg_images_categories"></div>
                                 <p class="p-1">{{category.name}}</p>
-                            </div>                        
+                            </div>
                     </div>
-                    <router-link 
+                    <router-link
                         :to="{name:'all-adverts'}"
                         class="col-3 col-md-3 p-0 all_categories bg-light height_content m-1 rounded text-decoration-none link_categories">
-                    
+
                         <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-end">
                             <div class="w-100 h-50 d-flex flex-wrap justify-content-center align-items-center">
                                 <span class="circle"></span>
@@ -51,28 +51,28 @@
                                 <span class="circle"></span>
                             </div>
                             <p class="p-1 text-dark">Todas las categorias</p>
-                        </div>                                                
-                    </router-link>                 
+                        </div>
+                    </router-link>
                 </div>
             </div>
 
             <!-- Busqueda segun categoria -->
-            <div            
-                v-if="!categoryFlag" 
+            <div
+                v-if="!categoryFlag"
                 class="hg-10-container container pb-2">
                 <div class="px-1">
                     <h4 class="text-capitalize"><span class="text-primary lead">Categoria buscada: </span>{{category}}</h4>
                     <p><span class="text-primary lead">Total: </span>{{total}}</p>
                 </div>
-                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>               
+                <transition-group class="d-flex flex-wrap justify-content-start align-items-stretch w-100" name='slide-fade'>
                     <advertslist-component
                         v-for="(advert) in adverts"
-                        :key="advert.id"                        
+                        :key="advert.id"
                         :advert="advert">
                     </advertslist-component>
-                </transition-group>            
-            </div>       
-        </div>        
+                </transition-group>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
                         name:'Juegos',
                         imageCssName:'juegos',
                         id:5
-                    },                                        
+                    },
                     {
                         name:'Bebe',
                         imageCssName:'bebe',
@@ -114,7 +114,7 @@ export default {
                         name:'Motor',
                         imageCssName:'motor',
                         id:11
-                    },                    
+                    },
                 ],
             myCanvas:'',
 
@@ -122,44 +122,44 @@ export default {
     },
     mounted(){
         let tween = gsap.from('.link_categories', {
-                duration: .7,                
+                duration: .3,
                 y: -200, //'random(-500,500)',
                 scale: 0,
-                stagger: 0.7,
+                stagger: 0.2,
                 ease: 'elastic',
-                delay:.5
-            });          
-            
-        let canvas = this.$refs.canvas4; 
+                delay:.2
+            });
+
+        let canvas = this.$refs.canvas4;
         this.startDrawing(canvas);
-    },    
+    },
     methods:{
-        searchByCategory(id,index){            
+        searchByCategory(id,index){
             this.categoryFlag=false;
             this.category = this.allCategories[index].name;
             axios.get(`/advertcategory/${id}`)
                 .then(response=>{
-                    this.adverts=response.data.adverts;                    
-                    this.total= response.data.total;                    
+                    this.adverts=response.data.adverts;
+                    this.total= response.data.total;
                     console.log('filtrando por categorias')
                     console.log(response.data)
                 })
                 .catch(err=>{
                     console.log('se produjo un error al solicitar por categorias')
                 })
-        },      
-        
+        },
+
     },
     beforeMount(){
-        
+
     },
 }
 </script>
 
-<style scoped>    
+<style scoped>
 
     #phaterCanv4, #icon_container{
-        position: relative;        
+        position: relative;
     }
 
     .hide_element{
@@ -176,16 +176,16 @@ export default {
     }
 
 
-    /** 
-    * Las animaciones de entrada y salida pueden usar 
+    /**
+    * Las animaciones de entrada y salida pueden usar
     * funciones de espera y duración diferentes.
     */
-    
+
     .slide-fade-enter-active {
-    transition: all .5s ease;
+    transition: all .1s ease;
     }
     .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
     .slide-fade-enter, .slide-fade-leave-to
     /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -211,10 +211,10 @@ export default {
         background: deepskyblue;
     }
 
-    .bg_images_categories{        
+    .bg_images_categories{
         background-position: center;
         background-size: contain;
-        background-repeat: no-repeat;        
+        background-repeat: no-repeat;
     }
 
     .juegos{background-image: url('/storage/images/categories/juegos.png');}
@@ -245,5 +245,5 @@ export default {
 
     .height_content:hover{
         background: radial-gradient(#bac4c5, transparent);
-    }  
+    }
 </style>

@@ -42,7 +42,7 @@ body{
     background: linear-gradient(52deg, #000000b0, #00000085);
 }
 
-.bg-gradient-bottom{    
+.bg-gradient-bottom{
     background: linear-gradient(2deg, black, transparent);
 }
 
@@ -53,7 +53,7 @@ body{
 .btn-gradient{
     background: linear-gradient(52deg, #000000a4, #0000001e);
 }
- 
+
 .bg-blue{
     background-color: #64b2f3;
 }
@@ -88,7 +88,7 @@ body{
 
 .imagen_link{
     display: block;
-    height: 100%;      
+    height: 100%;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -96,6 +96,10 @@ body{
 
 .hg_image{
     height: 100px;
+}
+
+.h_link{
+    height: 60px;
 }
 
 .overflow-hidden{
@@ -114,6 +118,10 @@ body{
 .pos_boton_add{
     right: 2rem;
     top:-2.3rem;
+}
+
+.page-link{
+    padding: 0.1rem 0.3rem !important;
 }
 
 .mx-hg-100{

@@ -1,19 +1,19 @@
 <template>
-    <div class="container">       
-        <nav aria-label="...">                    
-            <ul class="pagination flex-wrap mt-2">                                
+    <div class="container">
+        <nav aria-label="...">
+            <ul class="pagination flex-wrap mt-2">
                 <link-component
-                v-for="(link, index) in all_links" 
+                v-for="(link, index) in all_links"
                 :key="index"
                 :url="link.url"
                 :label="link.label"
                 :active="link.active"
                 @go="goTo">
-                </link-component>                              
+                </link-component>
             </ul>
-            <p class="p-0 m-0 lead font-weight-bold text-primary">Desde {{from}} Hasta {{to}}  de {{tot}} </p>                  
-        </nav>                    
-    </div>    
+            <p class="p-0 m-0 font-weight-bold text-primary">Desde {{from}} Hasta {{to}}  de {{tot}} </p>
+        </nav>
+    </div>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
             currentPage: this.objeto.currentPage,
             path: this.objeto.path,
             url:'',
-            links:'',            
+            links:'',
         }
     },
     mounted(){
@@ -63,7 +63,7 @@ export default {
 
             links.push(next);
 
-            return links		
+            return links
         },
 
         /**
@@ -75,15 +75,15 @@ export default {
             obj.url = url;
             obj.label = label;
             obj.active = active;
-            
+
             return obj;
-        },    
+        },
 
         next_page(){
             let next = (this.currentPage+1<=this.lastPage)?
                         this.make(this.url+(this.currentPage+1),'Next &raquo;',false) :
                         this.make('null','Next &raquo;',false);
-            
+
             return next;
         },
 
@@ -100,17 +100,17 @@ export default {
         },
     },
     computed:{
-        all_links(){            
+        all_links(){
             return this.links;
         },
     },
     watch:{
-        builderFlag:function(){            
+        builderFlag:function(){
             this.lastPage= this.objeto.lastPage,
             this.currentPage= this.objeto.currentPage,
             this.path= this.objeto.path
             this.url = this.path+'?search='+this.search+'&page=',
-            this.links = this.builderLinks();                    
+            this.links = this.builderLinks();
         }
     }
 }
