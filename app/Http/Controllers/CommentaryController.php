@@ -25,22 +25,23 @@ class CommentaryController extends Controller
      */
     public function index()
     {
-        $comments = Commentary::orderBy('created_at','DESC')->paginate(5);
-        
+        $comments = Commentary::orderBy('created_at', 'DESC')->paginate(5);
 
-       for ($i=0; $i < count($comments); $i++) {
-           $id = $comments[$i]['user_id'];
-           $user = User::find($id);
-           $contact = [
-               'name'=>$user->name,
-               'email'=>$user->email
-           ];
-           $comments[$i]['contact'] = $contact;           
-       }      
-      
+
+        for ($i = 0; $i < count($comments); $i++) {
+            $id = $comments[$i]['user_id'];
+            $user = User::find($id);
+            $contact = [
+                'name' => $user ? $user->name : 'anonimo',
+                'email' => $user ? $user->email : 'anonimo',
+            ];
+            $comments[$i]['contact'] = $contact;
+        }
+
+
         return $comments;
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,16 +56,16 @@ class CommentaryController extends Controller
         $commentary = new Commentary();
         $commentary->user_id = $user->id;
         $commentary->description = trim(Purify::clean($request->description));
-        $commentary->save();        
-       
+        $commentary->save();
+
         $contact = [
-            'name'=>$user->name,
-            'email'=>$user->email,
+            'name' => $user->name,
+            'email' => $user->email,
         ];
 
-        $commentary['contact'] = $contact;       
-       
-        return $commentary;        
+        $commentary['contact'] = $contact;
+
+        return $commentary;
     }
 
     /**
@@ -74,9 +75,9 @@ class CommentaryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Commentary $commentary)
-    {        
+    {
         return $commentary;
-    }  
+    }
 
     /**
      * Update the specified resource in storage.
@@ -87,10 +88,10 @@ class CommentaryController extends Controller
      */
     public function update(Request $request, Commentary $commentary)
     {
-        $user = Auth::user();                
+        $user = Auth::user();
 
-        if($commentary->user_id!=$user->id && !isAdmin($user->privilege_id))
-            abort('403','No autorizado a editar este comentario');
+        if ($commentary->user_id != $user->id && !isAdmin($user->privilege_id))
+            abort('403', 'No autorizado a editar este comentario');
 
         $commentary->description = trim(Purify::clean($request->description));
         $commentary->update();
@@ -106,16 +107,16 @@ class CommentaryController extends Controller
      */
     public function destroy(Commentary $commentary)
     {
-        $user = Auth::user();                
+        $user = Auth::user();
 
-        if($commentary->user_id!=$user->id && !isAdmin($user->privilege_id))
-            abort('403','No autorizado a editar este comentario');
-                     
-        if(!$commentary->delete())
-            return back()->withErrors(['delete'=>'No se ha podido borrar, intentelo luego']);
+        if ($commentary->user_id != $user->id && !isAdmin($user->privilege_id))
+            abort('403', 'No autorizado a editar este comentario');
 
-        $successfullyEntered = ['success'=>'Eliminado'];
-        
+        if (!$commentary->delete())
+            return back()->withErrors(['delete' => 'No se ha podido borrar, intentelo luego']);
+
+        $successfullyEntered = ['success' => 'Eliminado'];
+
         return $successfullyEntered;
     }
 }

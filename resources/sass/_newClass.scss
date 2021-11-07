@@ -86,6 +86,11 @@ body{
     background-color: #f4f4ff;
 }
 
+.bg-dark-red{
+    background-color: $darkRed;
+    color: white;
+}
+
 .imagen_link{
     display: block;
     height: 100%;

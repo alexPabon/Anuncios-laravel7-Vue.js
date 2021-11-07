@@ -22,7 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('menu-component', require('./components/MenuComponent.vue').default);
 
-// Componentes 
+// Componentes
 Vue.component('option-component',require('./components/OptionComponent.vue').default);
 
 /** usuarios autenticado */
@@ -104,6 +104,12 @@ import mouseOverEffect from './mixins/mouseOverEffect';
 import GSAP from './GSAP';
 import Vue from 'vue';
 
+// import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
+
+// Vue.use(html2canvas);
+// Vue.use(jsPDF);
+
 Vue.use(BootstrapVue)
 
 
@@ -114,5 +120,5 @@ Vue.mixin(mouseOverEffect);
 
 const app = new Vue({
     el: '#app',
-    router,         
+    router,
 });

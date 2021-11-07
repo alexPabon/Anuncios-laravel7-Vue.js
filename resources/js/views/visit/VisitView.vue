@@ -8,20 +8,30 @@
         <div v-if="!errorFlag" class="container">
             <!-- Actulizar listas -->
             <div>
-                <button 
+                <button
+                    @click="downPDF"
+                    class="btn bg-dark-red col-12 col-md-4 col-gl-2">
+                    Descargar pdf
+                </button>
+                <button
                     @click="updateList"
-                    class="btn btn-primary col-12 col-md-4 col-gl-2">Actualizar Lista</button>
+                    class="btn btn-primary col-12 col-md-4 col-gl-2">
+                    Actualizar Lista
+                </button>
                 <small class="alert-success rounded">{{msnSuccess}}</small>
                 <small class="alert-danger rounded">{{msnError}}</small>
-            </div>  
+            </div>
 
             <!-- lista no autenticados -->
-            <h1>todas las visitas</h1>
+            <h1  class="text-capitalize text-center">todas las visitas</h1>
             <h5>visitante No autenticado</h5>
-            <visitlist-component
-            :visitors="visitors"
-            :auth="visitorNoAuthoFlag">
-            </visitlist-component>
+            <div>
+                <visitlist-component
+                    :visitors="visitors"
+                    :auth="visitorNoAuthoFlag">
+                </visitlist-component>
+            </div>
+
 
             <!-- lista autenticado -->
             <h5>visitante autenticado</h5>
@@ -29,12 +39,18 @@
             :visitors="visitorsAuth"
             :auth="visitorAuthFlag">
             </visitlist-component>
-        </div>                
+        </div>
     </div>
-    
+
 </template>
 
 <script>
+// import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable'
+
+
+
 export default {
     data(){
         return{
@@ -58,7 +74,7 @@ export default {
     mounted(){
         axios.get('/allvisit')
             .then(response=>{
-                console.log('carga correcta de visitantes');               
+                console.log('carga correcta de visitantes');
                 this.visitors = this.sortJSON(response.data.noAuth, 'country', 'asc');
                 this.visitorNoAuthoFlag=0;
 
@@ -67,7 +83,7 @@ export default {
             })
             .catch(err=>{
                 console.log('Error al cargar visitantes Inicial')
-                console.log(err.response);                
+                console.log(err.response);
 
                 this.msnError= 'Se produjo un error al actulizar las listas';
 
@@ -87,14 +103,14 @@ export default {
 
             axios.get('/visit')
             .then(response=>{
-                console.log('carga correcta de visitantes')                
+                console.log('carga correcta de visitantes')
                 this.msnSuccess = response.data.update;
 
-                setTimeout(function(){ location.reload() }, 2000); 
+                setTimeout(function(){ location.reload() }, 2000);
             })
             .catch(err=>{
                 console.log('Error al cargar visitantes')
-                console.log(err.response);                
+                console.log(err.response);
 
                 if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,
@@ -109,7 +125,7 @@ export default {
                 var x = a[key],
                 y = b[key];
 
-                if (orden === 'asc') {                    
+                if (orden === 'asc') {
                     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                 }
 
@@ -117,7 +133,40 @@ export default {
                     return ((x > y) ? -1 : ((x < y) ? 1 : 0));
                 }
             });
-        }
+        },
+        downPDF(){
+
+            let ipNoAuth = [];
+            let imagenp = './storage/images/tablon/no-image.png';
+            var doc = new jsPDF();
+            var elementHandler = {
+                '#ignorePDF': function (element, renderer) {
+                    return true;
+                }
+            };
+
+            doc.autoTable({ html: '#noAuthTable' })
+
+            this.visitors.forEach(function(visit, index){
+                ipNoAuth.push([visit.country,visit.city,visit.cant]);
+            });
+
+
+            doc.autoTable({
+                head: [['Pais', 'Cudad', 'Cant visitas']],
+                body: ipNoAuth,
+            })
+
+            doc.save('table.pdf');
+
+        },
+    },
+    externals: {
+        // only define the dependencies you are NOT using as externals!
+        canvg: "canvg",
+        html2canvas: "html2canvas",
+        dompurify: "dompurify",
+        autoTable: "autoTable"
     }
 }
 </script>

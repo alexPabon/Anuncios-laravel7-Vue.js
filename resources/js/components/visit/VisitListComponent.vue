@@ -1,9 +1,9 @@
 <template>
-    <div class="pt-2">        
-        <div>            
+    <div class="pt-2">
+        <div>
             <div>
-                <table class="table table-striped table-light">
-                    <thead class="bg-primary">                        
+                <table id="noAuthTable" class="table table-striped table-light">
+                    <thead class="bg-primary">
                         <tr>
                             <th scope="col">Nº</th>
                             <th scope="col">numero ip</th>
@@ -24,7 +24,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>        
+        </div>
     </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
     props:['visitors','auth'],
     data(){
         return{
-            
+
         }
     },
     mounted(){

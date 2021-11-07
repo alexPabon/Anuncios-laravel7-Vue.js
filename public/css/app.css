@@ -11021,6 +11021,11 @@ body {
   background-color: #f4f4ff;
 }
 
+.bg-dark-red {
+  background-color: #561010;
+  color: white;
+}
+
 .imagen_link {
   display: block;
   height: 100%;

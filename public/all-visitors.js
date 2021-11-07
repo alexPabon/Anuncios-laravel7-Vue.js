@@ -9,6 +9,9 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -45,6 +48,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// import html2canvas from 'html2canvas';
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -121,7 +137,35 @@ __webpack_require__.r(__webpack_exports__);
           return x > y ? -1 : x < y ? 1 : 0;
         }
       });
+    },
+    downPDF: function downPDF() {
+      var ipNoAuth = [];
+      var imagenp = './storage/images/tablon/no-image.png';
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_0__["default"]();
+      var elementHandler = {
+        '#ignorePDF': function ignorePDF(element, renderer) {
+          return true;
+        }
+      };
+      doc.autoTable({
+        html: '#noAuthTable'
+      });
+      this.visitors.forEach(function (visit, index) {
+        ipNoAuth.push([visit.country, visit.city, visit.cant]);
+      });
+      doc.autoTable({
+        head: [['Pais', 'Cudad', 'Cant visitas']],
+        body: ipNoAuth
+      });
+      doc.save('table.pdf');
     }
+  },
+  externals: {
+    // only define the dependencies you are NOT using as externals!
+    canvg: "canvg",
+    html2canvas: "html2canvas",
+    dompurify: "dompurify",
+    autoTable: "autoTable"
   }
 });
 
@@ -161,10 +205,19 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    staticClass: "btn bg-dark-red col-12 col-md-4 col-gl-2",
+                    on: { click: _vm.downPDF }
+                  },
+                  [_vm._v("\n                Descargar pdf\n            ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
                     staticClass: "btn btn-primary col-12 col-md-4 col-gl-2",
                     on: { click: _vm.updateList }
                   },
-                  [_vm._v("Actualizar Lista")]
+                  [_vm._v("\n                Actualizar Lista\n            ")]
                 ),
                 _vm._v(" "),
                 _c("small", { staticClass: "alert-success rounded" }, [
@@ -176,13 +229,24 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("h1", [_vm._v("todas las visitas")]),
+              _c("h1", { staticClass: "text-capitalize text-center" }, [
+                _vm._v("todas las visitas")
+              ]),
               _vm._v(" "),
               _c("h5", [_vm._v("visitante No autenticado")]),
               _vm._v(" "),
-              _c("visitlist-component", {
-                attrs: { visitors: _vm.visitors, auth: _vm.visitorNoAuthoFlag }
-              }),
+              _c(
+                "div",
+                [
+                  _c("visitlist-component", {
+                    attrs: {
+                      visitors: _vm.visitors,
+                      auth: _vm.visitorNoAuthoFlag
+                    }
+                  })
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("h5", [_vm._v("visitante autenticado")]),
               _vm._v(" "),

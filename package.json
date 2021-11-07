@@ -27,6 +27,8 @@
         "bootstrap-select": "^1.13.18",
         "bootstrap-vue": "^2.16.0",
         "jquery-validation": "^1.19.2",
+        "jspdf": "^2.4.0",
+        "jspdf-autotable": "^3.5.23",
         "vue-infinite-loading": "^2.4.5",
         "vue-router": "^3.3.4"
     }
