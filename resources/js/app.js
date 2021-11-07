@@ -104,14 +104,7 @@ import mouseOverEffect from './mixins/mouseOverEffect';
 import GSAP from './GSAP';
 import Vue from 'vue';
 
-// import html2canvas from 'html2canvas';
-// import jsPDF from 'jspdf';
-
-// Vue.use(html2canvas);
-// Vue.use(jsPDF);
-
 Vue.use(BootstrapVue)
-
 
 Vue.mixin(auth);
 Vue.mixin(imagesAddress);

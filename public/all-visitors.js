@@ -182,7 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -192,7 +192,7 @@ var render = function() {
     [
       _vm.errorFlag
         ? _c("errors-component", {
-            attrs: { codig: _vm.errorCodig, mensaje: _vm.errorMsn }
+            attrs: { codig: _vm.errorCodig, mensaje: _vm.errorMsn },
           })
         : _vm._e(),
       _vm._v(" "),
@@ -206,7 +206,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn bg-dark-red col-12 col-md-4 col-gl-2",
-                    on: { click: _vm.downPDF }
+                    on: { click: _vm.downPDF },
                   },
                   [_vm._v("\n                Descargar pdf\n            ")]
                 ),
@@ -215,22 +215,22 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary col-12 col-md-4 col-gl-2",
-                    on: { click: _vm.updateList }
+                    on: { click: _vm.updateList },
                   },
                   [_vm._v("\n                Actualizar Lista\n            ")]
                 ),
                 _vm._v(" "),
                 _c("small", { staticClass: "alert-success rounded" }, [
-                  _vm._v(_vm._s(_vm.msnSuccess))
+                  _vm._v(_vm._s(_vm.msnSuccess)),
                 ]),
                 _vm._v(" "),
                 _c("small", { staticClass: "alert-danger rounded" }, [
-                  _vm._v(_vm._s(_vm.msnError))
-                ])
+                  _vm._v(_vm._s(_vm.msnError)),
+                ]),
               ]),
               _vm._v(" "),
               _c("h1", { staticClass: "text-capitalize text-center" }, [
-                _vm._v("todas las visitas")
+                _vm._v("todas las visitas"),
               ]),
               _vm._v(" "),
               _c("h5", [_vm._v("visitante No autenticado")]),
@@ -241,9 +241,9 @@ var render = function() {
                   _c("visitlist-component", {
                     attrs: {
                       visitors: _vm.visitors,
-                      auth: _vm.visitorNoAuthoFlag
-                    }
-                  })
+                      auth: _vm.visitorNoAuthoFlag,
+                    },
+                  }),
                 ],
                 1
               ),
@@ -251,12 +251,15 @@ var render = function() {
               _c("h5", [_vm._v("visitante autenticado")]),
               _vm._v(" "),
               _c("visitlist-component", {
-                attrs: { visitors: _vm.visitorsAuth, auth: _vm.visitorAuthFlag }
-              })
+                attrs: {
+                  visitors: _vm.visitorsAuth,
+                  auth: _vm.visitorAuthFlag,
+                },
+              }),
             ],
             1
           )
-        : _vm._e()
+        : _vm._e(),
     ],
     1
   )

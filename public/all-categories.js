@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -147,7 +147,7 @@ var render = function() {
     [
       _vm.errorFlag
         ? _c("errors-component", {
-            attrs: { codig: _vm.errorCodig, mensaje: _vm.errorMsn }
+            attrs: { codig: _vm.errorCodig, mensaje: _vm.errorMsn },
           })
         : _vm._e(),
       _vm._v(" "),
@@ -162,11 +162,11 @@ var render = function() {
                     {
                       attrs: { action: "" },
                       on: {
-                        submit: function($event) {
+                        submit: function ($event) {
                           $event.preventDefault()
                           return _vm.newCategory()
-                        }
-                      }
+                        },
+                      },
                     },
                     [
                       _c("input", {
@@ -175,8 +175,8 @@ var render = function() {
                             name: "model",
                             rawName: "v-model",
                             value: _vm.name,
-                            expression: "name"
-                          }
+                            expression: "name",
+                          },
                         ],
                         staticClass: "form-control",
                         attrs: {
@@ -184,46 +184,46 @@ var render = function() {
                           min: "3",
                           max: "30",
                           placeholder: "Nueva categoria",
-                          required: ""
+                          required: "",
                         },
                         domProps: { value: _vm.name },
                         on: {
-                          input: function($event) {
+                          input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.name = $event.target.value
-                          }
-                        }
+                          },
+                        },
                       }),
                       _vm._v(" "),
                       _c(
                         "button",
                         {
                           staticClass: "btn btn-primary",
-                          attrs: { type: "submit" }
+                          attrs: { type: "submit" },
                         },
                         [_vm._v("Crear cátegoria")]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        _vm._l(_vm.errorData, function(errors, index) {
+                        _vm._l(_vm.errorData, function (errors, index) {
                           return _c(
                             "p",
                             { key: index, staticClass: "text-danger" },
-                            _vm._l(errors, function(error, index) {
+                            _vm._l(errors, function (error, index) {
                               return _c("span", { key: index }, [
-                                _vm._v(_vm._s(error))
+                                _vm._v(_vm._s(error)),
                               ])
                             }),
                             0
                           )
                         }),
                         0
-                      )
+                      ),
                     ]
-                  )
+                  ),
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -236,25 +236,25 @@ var render = function() {
                     _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
                     _vm._v(" "),
                     _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Updated at")
+                      _vm._v("Updated at"),
                     ]),
                     _vm._v(" "),
                     _vm.isAdmin
                       ? _c("th", { attrs: { scope: "col" } }, [
-                          _vm._v("Options")
+                          _vm._v("Options"),
                         ])
-                      : _vm._e()
-                  ])
+                      : _vm._e(),
+                  ]),
                 ]),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.categories, function(category, index) {
+                  _vm._l(_vm.categories, function (category, index) {
                     return _c("categorytable-component", {
                       key: index,
                       attrs: { category: category },
                       on: {
-                        update: function($event) {
+                        update: function ($event) {
                           var i = arguments.length,
                             argsArray = Array(i)
                           while (i--) argsArray[i] = arguments[i]
@@ -263,18 +263,18 @@ var render = function() {
                             [index].concat(argsArray)
                           )
                         },
-                        delete: function($event) {
+                        delete: function ($event) {
                           return _vm.deleteCategory(index)
-                        }
-                      }
+                        },
+                      },
                     })
                   }),
                   1
-                )
-              ])
-            ])
+                ),
+              ]),
+            ]),
           ])
-        : _vm._e()
+        : _vm._e(),
     ],
     1
   )
