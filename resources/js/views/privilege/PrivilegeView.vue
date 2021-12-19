@@ -6,12 +6,12 @@
             :mensaje=errorMsn
         ></errors-component>
         <div v-if="!errorFlag">
-            <h4>privileges</h4>            
+            <h4>privileges</h4>
             <div class="py-2 col-12 col-md-6 col-lg-4">
                 <form v-on:submit.prevent="newPrivilege()" action="">
-                    <input v-model="label" type="number" class="form-control" placeholder="label" >
-                    <input v-model="name" type="text" class="form-control" min="3" max="30" placeholder="Nuevo privilegio" >                    
-                    <button type="submit" class="btn btn-primary">Crear privilegio</button>
+                    <input v-model="label" type="number" class="form-control my-1" placeholder="label" >
+                    <input v-model="name" type="text" class="form-control my-1" min="3" max="30" placeholder="Nuevo privilegio" >
+                    <button type="submit" class="btn btn-primary m-1">Crear privilegio</button>
                     <div>
                         <!-- Errores nueva categoria -->
                         <p
@@ -42,14 +42,14 @@
                             v-for="(privilege,index) in privileges"
                             :key="index"
                             :privilege="privilege"
-                            @update="updatePrivilege(index, ...arguments)"                            
+                            @update="updatePrivilege(index, ...arguments)"
                             @delete="deletePrivilege(index)">
                         </privilegetable-component>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -57,10 +57,10 @@
 export default {
     data(){
         return{
-            privileges:[],                        
+            privileges:[],
             name:'',
             label:'',
-            
+
             errorData:[],
 
             /**Error de permisos*/
@@ -73,11 +73,11 @@ export default {
         axios.get('/privilege')
             .then(response=>{
                 this.privileges= response.data;
-                console.log(this.privileges);                
+                console.log(this.privileges);
             })
             .catch(err=>{
                 console.log('Error al cargar privilegios')
-                console.log(err.response);                
+                console.log(err.response);
 
                 if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,
@@ -91,13 +91,13 @@ export default {
 
             this.errorPost='';
             this.errorData=[];
-            
+
             const params={
                 'name':this.name,
                 'label':this.label,
             }
 
-            axios.post('/privi', params)
+            axios.post('/privilege', params)
                 .then(response=>{
                     console.log('Se ha guardado la categoria')
                     this.privileges.unshift(response.data);
@@ -106,20 +106,20 @@ export default {
                 })
                 .catch(err=>{
                     console.log('hay errores al guardar la categoria')
-                    console.log(err.response);                   
+                    console.log(err.response);
 
-                    if(err.response.status==422)                        
+                    if(err.response.status==422)
                         this.errorData = err.response.data.errors;
-                                 
+
                 })
         },
         updatePrivilege(index,privilege){
             // para insertar el nuevo valor en el array
-            // Vue.set(this.array, index, newValue);            
+            // Vue.set(this.array, index, newValue);
             Vue.set(this.privileges, index, privilege);
         },
         deletePrivilege(index){
-            this.privileges.splice(index,1)            
+            this.privileges.splice(index,1)
         }
     }
 }

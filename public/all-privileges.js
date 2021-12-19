@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
         'name': this.name,
         'label': this.label
       };
-      axios.post('/privi', params).then(function (response) {
+      axios.post('/privilege', params).then(function (response) {
         console.log('Se ha guardado la categoria');
 
         _this2.privileges.unshift(response.data);
@@ -119,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updatePrivilege: function updatePrivilege(index, privilege) {
       // para insertar el nuevo valor en el array
-      // Vue.set(this.array, index, newValue);            
+      // Vue.set(this.array, index, newValue);
       Vue.set(this.privileges, index, privilege);
     },
     deletePrivilege: function deletePrivilege(index) {
@@ -181,7 +181,7 @@ var render = function () {
                         expression: "label",
                       },
                     ],
-                    staticClass: "form-control",
+                    staticClass: "form-control my-1",
                     attrs: { type: "number", placeholder: "label" },
                     domProps: { value: _vm.label },
                     on: {
@@ -203,7 +203,7 @@ var render = function () {
                         expression: "name",
                       },
                     ],
-                    staticClass: "form-control",
+                    staticClass: "form-control my-1",
                     attrs: {
                       type: "text",
                       min: "3",
@@ -224,7 +224,7 @@ var render = function () {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "btn btn-primary m-1",
                       attrs: { type: "submit" },
                     },
                     [_vm._v("Crear privilegio")]

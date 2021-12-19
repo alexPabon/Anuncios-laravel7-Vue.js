@@ -52,7 +52,7 @@
             </div>
             <img class="rounded col-12" src="/./storage/images/perfil/fotoPerfil.jpg" alt="foto de perfil" title="Alexander">
         </div>
-        <div v-if="fotoPerfil" v-on:click="fotoPerfil=!fotoPerfil" class="hg-10-container w-100 bg-gradient position-fixed fixed-top text-center d-flex justify-content-center align-items-center"></div>
+        <div v-if="fotoPerfil" v-on:click="fotoPerfil=!fotoPerfil" class="hg-10-container w-100 bg_dark_transparent position-fixed fixed-top text-center d-flex justify-content-center align-items-center"></div>
 
         <transition name="fade">
             <div v-if="show" key="ver-todo" class="lead hg-fixed position-fixed fixed-top col-9 col-md-4 col-lg-2 p-0 pt-4 m-0  text-right text-info bg-light">
@@ -178,7 +178,7 @@
         </transition>
         <transition name="slide-fade">
             <!-- Sombra de pantalla -->
-            <div v-if="show" v-on:click="show=false" class="bg-gradient hg-fixed w-100 fondo-fixed"></div>
+            <div v-if="show" v-on:click="show=false" class="bg_dark_transparent hg-fixed w-100 fondo-fixed"></div>
         </transition>
 
     </div>
@@ -358,6 +358,10 @@
         padding: 0 15px;
         border-radius: 2rem;
         color:white;
+    }
+
+    .bg_dark_transparent{
+        background: linear-gradient(52deg, #000000b0, #00000085);
     }
 
     /**

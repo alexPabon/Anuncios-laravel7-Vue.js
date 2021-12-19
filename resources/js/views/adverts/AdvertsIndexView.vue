@@ -242,7 +242,7 @@
     }
 
     .bg-index-Adverts{
-        background: radial-gradient(#628bcb54, #1c4b6614);
+        background: radial-gradient(#ffffff, #e1e0e0);
     }
 
     .bg_form{
