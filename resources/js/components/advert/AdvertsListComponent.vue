@@ -62,10 +62,10 @@ export default {
 
 <style scoped>
     .back-color{
-        background-color: #05c4fd;
+        background-color: #005243;
     }
     .back-color:hover{
-        background: #062a48;
+        background-color: #032f1a;
     }
     .cursor-pointer{
         cursor: pointer;

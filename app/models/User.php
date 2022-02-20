@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\models\Seen;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\verifyEmail;
 use Illuminate\Auth\Notifications\VerifyEmail as NotificationsVerifyEmail;
@@ -13,6 +14,10 @@ use App\models\Advert;
 Use App\models\Privilege;
 use DateTimeInterface;
 
+/**
+ * @property integer $id
+ * @property string $name
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -23,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name','phone', 'password','email'
+        'id','name','phone', 'password','email'
     ];
 
     /**
@@ -32,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','created_at','update_at',        
+        'password', 'remember_token','created_at','update_at',
     ];
 
     /**
@@ -81,11 +86,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function adverts(){
         return $this->hasMany(Advert::class);
     }
-    
+
     /**
      * Relacion con privileges
      */
     public function privilege(){
-        return $this->belongsTo(Privilege::class);                
+        return $this->belongsTo(Privilege::class);
+    }
+
+    public function seen(){
+        return $this->hasMany(Seen::class);
     }
 }

@@ -32,8 +32,8 @@ export default new Router({
         },
         {
             path:'/showadvert/:id',
-            name:'show-advert',  
-            props:true,          
+            name:'show-advert',
+            props:true,
             component: ()=>import(/*webpackChunkName:"show-advert"*/'./views/adverts/AdvertShowView.vue')
         },
         {
@@ -67,9 +67,14 @@ export default new Router({
             component: ()=>import(/*webpackChunkName:"all-visitors"*/'./views/visit/VisitView.vue')
         },
         {
+            path:'/visitors-auth',
+            name:'all-visitors-auth',
+            component: ()=>import(/*webpackChunkName:"all-visitors"*/'./views/visit/VisitAuthView')
+        },
+        {
             path:'/showip/:ip/:authenticated',
-            name:'show-ip',  
-            props:true,          
+            name:'show-ip',
+            props:true,
             component: ()=>import(/*webpackChunkName:"show-ip"*/'./views/visit/VisitShowIp.vue')
         },
         {
@@ -81,7 +86,7 @@ export default new Router({
             path:'/*',
             name:'no-found',
             component: ()=>import(/*webpackChunkName:"no-found"*/'./views/NoFoundView.vue')
-        }        
+        }
     ],
     mode: 'history',
 })

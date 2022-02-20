@@ -20,7 +20,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth');
     }
 
     /**
@@ -32,16 +32,16 @@ class UserController extends Controller
     {
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
-        
+
         // Policies
         if($request->user()->cant('index',$request->user()))
             abort('403','No Autorizado');
-        
+
         $users = User::paginate(15);
         $users->each(function($user){
             $user->privilege;
         });
-        
+
         return $users;
     }
 
@@ -64,11 +64,11 @@ class UserController extends Controller
             $user->privilege;
             return $user;
         }
-        
+
         $privilegeName= User::find($user->id)->privilege->name;
 
         $user->privilege= ['name'=>$privilegeName];
-        
+
         return $user;
     }
 
@@ -101,7 +101,7 @@ class UserController extends Controller
         AddressIp::guardarIp();
 
         $user = User::find($id);
-        
+
         if($user->email!=$request->email){
             $request->validate(
                 ['email'=>'required|email|max:255|unique:users',],
@@ -118,21 +118,21 @@ class UserController extends Controller
         // Policies
         if($request->user()->cant('update',$user))
             abort('403','No Autorizado para ver Actualizar este perfil');
-        
+
         $userIni = $user->name;
         $cleanRequest = Purify::clean($request->post());
-        $user->name = $cleanRequest['name'];        
+        $user->name = $cleanRequest['name'];
         $user->phone = $cleanRequest['phone'];
-        $user->email = $cleanRequest['email'];        
+        $user->email = $cleanRequest['email'];
 
         if(isAdmin($request->user()->privilege_id))
             $user->privilege_id= $cleanRequest['privilege_id'];
-        
+
         if(!$user->update())
             return back()->withErrors(['update'=>'No se pudo actualizar']);
-                
+
         $user->privilege;
-        
+
         return $user;
     }
 
@@ -144,13 +144,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, $id)
-    {        
+    {
         $user = User::find($id);
 
         // Policies
         if($request->user()->cant('delete',$user))
             abort('403','No Autorizado para Borrar este perfil');
-        
+
         return view('user.form-delete')->with(['user'=>$user]);
     }
 
@@ -161,13 +161,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)    
-    { 
+    public function destroy(Request $request, $id)
+    {
         //guarda la direccion Ip del cliente
         AddressIp::guardarIp();
-                
+
         $user = User::find($id);
-        
+
         // Policies
         if($request->user()->cant('destroy',$user))
             abort('403','No Autorizado para Eliminar este perfil');
@@ -182,7 +182,7 @@ class UserController extends Controller
         if(!$user->delete())
             return back()->withErrors(['delete'=>'No se ha podido borrar, intentelo luego']);
 
-        
+
         return ['success'=>'Eliminado correcto'];
 
     }

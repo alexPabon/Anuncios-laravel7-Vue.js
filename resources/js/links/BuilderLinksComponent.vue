@@ -11,7 +11,7 @@
                 @go="goTo">
                 </link-component>
             </ul>
-            <p class="p-0 m-0 font-weight-bold text-primary">Desde {{from}} Hasta {{to}}  de {{tot}} </p>
+            <p class="p-0 m-0 font-weight-bold text-primary">Desde <span class="text-dark">{{from}}</span> Hasta <span class="text-dark">{{to}}</span>  de <span class="text-dark">{{tot}}</span> </p>
         </nav>
     </div>
 </template>

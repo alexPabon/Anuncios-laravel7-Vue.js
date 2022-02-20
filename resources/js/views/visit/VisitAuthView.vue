@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-5 bg-light-grey pb-3">
+    <div class="pt-5 pb-3">
         <errors-component
             v-if="errorFlag"
             :codig=errorCodig
@@ -22,12 +22,13 @@
                 <small class="alert-danger rounded">{{msnError}}</small>
             </div>
 
-            <!-- lista no autenticados -->
-            <h1  class="text-capitalize text-center my-2">visitante No autenticado</h1>
+            <!-- lista autenticados -->
+            <h1  class="text-capitalize text-center my-2">visitante autenticado</h1>
+
             <div>
                 <visitlist-component
                     :visitors="visitors"
-                    :auth="visitorNoAuthoFlag">
+                    :auth="visitorAuthFlag">
                 </visitlist-component>
             </div>
             <!-- nueva paginación -->
@@ -63,8 +64,7 @@ export default {
             /** visitantes */
             visitors:[],
             visitorsAuth:[],
-            visitorAuthFlag:'',
-            visitorNoAuthoFlag:'',
+            visitorAuthFlag:1,
 
             /** Actualizar lista */
             msnSuccess:'',
@@ -85,10 +85,10 @@ export default {
 
             responseSuccess:true,
             colors:true,
-            page:'/visit-no-auth?page=1',
+            page:'/allvisit?page=1',
             currentPage:1,
             lastPage:1,
-            nameTable:'no-auth',
+            nameTable:'Anuncios',
             from:'',
             total:'',
             to:'',
@@ -97,18 +97,19 @@ export default {
         }
     },
     mounted(){
-        axios.get('/visit-no-auth')
+        axios.get('/visit-auth')
             .then(response=>{
+                console.log('carga correcta de visitantes');
+                console.log(response);
                 this.visitors = response.data.data;
 
                 this.pagination(response.data);
-                this.visitorNoAuthoFlag=0;
             })
             .catch(err=>{
-                console.log('Error al cargar visitantes No autenticados')
+                console.log('Error al cargar visitantes Inicial')
                 console.log(err);
 
-                this.msnError= 'Se produjo un error';
+                this.msnError= 'Se produjo un error al actulizar las listas';
 
                 if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,
@@ -128,9 +129,10 @@ export default {
             axios.get('/visit')
             .then(response=>{
                 console.log('carga correcta de visitantes')
+                console.log(response);
                 this.msnSuccess = response.data.update;
 
-                setTimeout(function(){ location.reload() }, 2000);
+                // setTimeout(function(){ location.reload() }, 2000);
             })
             .catch(err=>{
                 console.log('Error al cargar visitantes')
@@ -199,13 +201,15 @@ export default {
             this.builderFlag = !this.builderFlag;
         },
         goPage(nPage){
-            axios.get(`/visit-no-auth?page=${nPage}`)
+            axios.get(`/visit-auth?page=${nPage}`)
                 .then(response=>{
                     console.log('respusta advert')
                     console.log(response);
                     this.visitors = response.data.data;
 
                     this.pagination(response.data);
+
+                    console.log(response);
                 })
         },
     },

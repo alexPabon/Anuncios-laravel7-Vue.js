@@ -7,32 +7,44 @@
         ></errors-component>
         <div v-if="!errorFlag" class="container">
             <h1>Detalles {{visitorTitle}}</h1>
-            <router-link :to="{name:`all-visitors`}" class="text-decoration-none">
+            <router-link :to="{name:gotBackToPage}" class="text-decoration-none">
                 <button class="btn btn-primary my-2">Volver</button>
             </router-link>
             <!-- Detalles donde ha ingresado una determinada ip -->
+            <div>
+                <p>
+                    <span class="text-info">IP:</span> {{infoIp.number_ip}}<br>
+                    <span class="text-info">Pais:</span> {{infoIp.country}}<br>
+                    <span class="text-info">Ciudad:</span> {{infoIp.city}}<br>
+                    <span class="text-info">CP:</span> {{infoIp.zip}}<br>
+                    <span class="text-info">Lat:</span> {{infoIp.latitude}}<br>
+                    <span class="text-info">Lon:</span> {{infoIp.longitude}}
+                </p>
+            </div>
             <table class="table table-striped table-light">
-                <thead class="bg-primary">                        
+                <thead class="bg-primary">
                     <tr>
                         <th><small>Nº</small></th>
-                        <th scope="col">numero ip</th>
+                        <th scope="col">Usuario</th>
                         <th scope="col">Direccion</th>
-                        <th scope="col"><small>Creado</small></th>                        
+                        <th>Visitado</th>
+                        <th scope="col"><small>Ultimo acceso</small></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr 
+                    <tr
                         v-for="(visitor, index) in visitorIps"
                         :key="index"
                         class="links_ip">
-                            <td><small>{{index+1}}</small></td>                        
-                            <td>{{visitor.number_ip}}</td>                        
+                            <td><small>{{index+1}}</small></td>
+                            <td>{{(visitor.user != undefined)? visitor.user.name:'anonimo'}}</td>
                             <td>{{visitor.address}}</td>
-                            <td><small>{{visitor.created_at}}</small></td>                        
+                            <td>{{visitor.quantity}}</td>
+                            <td><small>{{visitor.updated_at}}</small></td>
                     </tr>
                 </tbody>
             </table>
-        </div>                
+        </div>
     </div>
 </template>
 
@@ -43,6 +55,8 @@ export default {
         return{
             visitorIps:[],
             visitorTitle:'',
+            infoIp:'',
+            gotBackToPage:'all-visitors',
 
             /**Error de permisos*/
             errorFlag:false,
@@ -51,7 +65,7 @@ export default {
         }
     },
     mounted(){
-        
+
         if(this.authenticated==1)
             this.visitorAuth();
         else
@@ -60,7 +74,7 @@ export default {
     methods:{
         visitorAuth(){
 
-            /** ver detalles de una determinada Ip en la tabla 
+            /** ver detalles de una determinada Ip en la tabla
              * de visitante autenticado
              */
             console.log('autenticado');
@@ -68,12 +82,16 @@ export default {
             axios.get(`/visitauth/${this.ip}`)
             .then(response=>{
                 console.log('Carga detalles ip')
-                
+
                 this.visitorTitle = 'Visitante autenticado'
-                this.visitorIps= response.data;
+                this.visitorIps= response.data.seen;
+                this.infoIp = response.data;
+                this.gotBackToPage = 'all-visitors-auth';
+
+                console.log(this.visitorIps);
             })
             .catch(err=>{
-                console.log('Error al cargar ip')                              
+                console.log('Error al cargar ip')
 
                 if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,
@@ -85,20 +103,21 @@ export default {
         },
         visitorNoAuth(){
 
-            /** ver detalles de una determinada Ip en la tabla 
+            /** ver detalles de una determinada Ip en la tabla
              * de visitante NO autenticado
              */
             console.log('NO autenticado');
             axios.get(`/visit/${this.ip}`)
             .then(response=>{
                 console.log('Carga detalles ip')
-                
+                console.log(response.data);
                 this.visitorTitle = 'Visitante No autenticado'
-                this.visitorIps= response.data;
+                this.visitorIps= response.data.seen;
+                this.infoIp = response.data;
             })
             .catch(err=>{
                 console.log('Error al cargar ip')
-                console.log(err.response);                
+                console.log(err.response);
 
                 if(err.response.status==403 || err.response.status==401){
                     this.errorFlag=true,

@@ -91,7 +91,12 @@
                         </div>
                         <div v-on:click="show=!show; ">
                             <router-link :to="{name:'all-visitors'}" :class="pageActive('/visitors')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
-                                <small>Visitantes</small>
+                                <small>No registrados</small>
+                            </router-link>
+                        </div>
+                        <div v-on:click="show=!show; ">
+                            <router-link :to="{name:'all-visitors-auth'}" :class="pageActive('/visitors-auth')" class="links d-flex justify-content-between align-items-center px-2 py-1 my-3 badge-pill">
+                                <small>Registrados</small>
                             </router-link>
                         </div>
                     </div>

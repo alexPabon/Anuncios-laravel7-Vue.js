@@ -1,15 +1,15 @@
 <template>
-    <div class="pt-4">
+    <div class="pt-4 bg-indigo bg-gradient">
         <!-- comprobar si esta autenticado -->
         <authenticated-component></authenticated-component>
-        <div v-if="isAuthenticated">       
+        <div v-if="isAuthenticated">
             <errors-component
                 v-if="viewError"
                 :codig=responseErrorCodig
                 :mensaje=responseErrorMsn
-            ></errors-component>          
+            ></errors-component>
             <div v-if="responseSuccess">
-                <h3 class="text-center">Listado de todos los Usuarios registrados</h3>
+                <h3 class="text-center pt-2">Listado de todos los Usuarios registrados</h3>
                 <!-- Paginacion -->
                 <listpage-component
                     :lastPage=lastPage
@@ -21,23 +21,23 @@
                 ></listpage-component>
                 <!-- Usuarios -->
                 <div class="container">
-                    <transition-group name='slide-fade'>               
+                    <transition-group name='slide-fade'>
                         <user-component
                             v-for="(usuario, index) in users"
                             :key="usuario.id"
-                            :usuario="usuario"                        
+                            :usuario="usuario"
                             @delete="deleteUser(index, ...arguments)"
                             @cancelUpdate="cancelUpdateUser(index, ...arguments)">
                         ></user-component>
                     </transition-group>
-                    <infinite-loading @infinite="infiniteHandler">                
+                    <infinite-loading @infinite="infiniteHandler">
                         <div slot="no-more">-- No hay mas comentarios --</div>
                         <div slot="spinner">Cargando...</div>
                         <div slot="no-results">Sin resultados</div>
-                    </infinite-loading>            
-                </div>      
-            </div>        
-        </div>        
+                    </infinite-loading>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -57,13 +57,13 @@
                 msnError:'',
                 responseErrorMsn:'',
                 responseErrorCodig:'',
-                viewError:false,                 
+                viewError:false,
             }
         },
-        mounted() {            
+        mounted() {
             console.log('Component users mounted.');
         },
-        methods:{                      
+        methods:{
             pageCurrentActive(page){
                 return (this.currentPage==page)?['active']:'';
             },
@@ -79,19 +79,19 @@
                         this.verifyPage = true;
                     })
             },
-            infiniteHandler($state) { 
-                
+            infiniteHandler($state) {
+
                 // Metodo para hacer que la pagina se recargue sin elegir pagina
-                let url = `/user?page=${this.page++}`;             
-                
+                let url = `/user?page=${this.page++}`;
+
                 if(this.verifyPage){
                     this.users=[];
-                    this.verifyPage=false;                    
+                    this.verifyPage=false;
                 }
 
                 axios.get(url)
                 .then(response => {
-                    let allUsers = response.data.data;                    
+                    let allUsers = response.data.data;
 
                     if(allUsers.length){
                         this.users = this.users.concat(allUsers)
@@ -99,41 +99,41 @@
                     }else{
                         $state.complete()
                         console.log('estado completo');
-                    }                   
-                    
+                    }
+
                     // Modifamos los valores con los de response.data
-                    this.lastPage = response.data.last_page;                    
-                    this.total= response.data.total;                    
+                    this.lastPage = response.data.last_page;
+                    this.total= response.data.total;
                     if(response.data.current_page<=response.data.last_page){
                         this.from= response.data.from;
                         this.currentPage=response.data.current_page;
-                    }                                                                   
-                    
+                    }
+
                     console.log('respuesta del servidor /user');
-                    console.log(response.data);                    
+                    console.log(response.data);
                 })
                 .catch(err =>{
                         let msnErrores = err.response.data;
-                        console.log('errores al cargar usuarios');                        
-                        console.log(msnErrores);                         
+                        console.log('errores al cargar usuarios');
+                        console.log(msnErrores);
                         this.msnErro='Error al cargar los usuarios';
                         this.msnErro+=err.response.data.message;
                         this.responseErrorMsn=err.response.data.message;
-                        this.responseErrorCodig=err.response.status; 
-                        this.viewError=true; 
-                        this.responseSuccess=false;                     
+                        this.responseErrorCodig=err.response.status;
+                        this.viewError=true;
+                        this.responseSuccess=false;
 
                         // if(err.response.status==403)
                         //     location.replace('/home');
 
                         // if(err.response.status==429)
                         //     location.replace('/home');
-                    });                
-            },                       
-            cancelUpdateUser(index,usuario){                
+                    });
+            },
+            cancelUpdateUser(index,usuario){
                 // para insertar el nuevo valor en el array
                 // Vue.set(this.array, index, newValue);
-                Vue.set(this.users, index, usuario);                  
+                Vue.set(this.users, index, usuario);
             },
             deleteUser(index,usuario){
                 axios.delete(`/user/${usuario}`)
@@ -143,17 +143,17 @@
                         console.log('DELETED user from list');
                         console.log(response);
                     });
-            },            
+            },
         },
     }
 </script>
 
 <style scoped>
-    /** 
-    * Las animaciones de entrada y salida pueden usar 
+    /**
+    * Las animaciones de entrada y salida pueden usar
     * funciones de espera y duración diferentes.
     */
-    
+
     .slide-fade-enter-active {
     transition: all .5s ease;
     }

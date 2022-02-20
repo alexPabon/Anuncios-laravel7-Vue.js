@@ -11,11 +11,11 @@ class SavePlaceTrait{
     protected static $file='files-ips/all-ips.json';
     protected static $file_ip_no_Auth='files-ips/all-ips-no-Auth.json';
     protected static $file_ip_auth='files-ips/all-ips-auth.json';
-    
+
 
     /**
      * Comprueba si la Ip existe en el fichero JSON
-     * 
+     *
      * @param string $ip
      * @return bool
      */
@@ -32,19 +32,19 @@ class SavePlaceTrait{
             }
 
         return false;
-    }   
+    }
 
     /**
      * Abre el fichero y añade los nuevos datos
-     * 
-     * 
+     *
+     *
      * @param array $dato
      * @return boolean
      */
     public static function saveCity(array $dato):bool{
-        
+
         $allIps_json = file_get_contents(storage_path(self::$file));
-        $allips = json_decode($allIps_json);
+        $allips = (array) json_decode($allIps_json);
 
         $saveContent['number_ip']= $dato['query'];
         $saveContent['country']= $dato['country'];
@@ -53,39 +53,40 @@ class SavePlaceTrait{
         $saveContent['lat']= $dato['lat'];
         $saveContent['lon']= $dato['lon'];
 
-        $allips[]=$saveContent;
+        if(!is_array($allips))
+            $allips = [$dato['query']=>$saveContent];
+        else
+            $allips[$dato['query']] = $saveContent;
 
         $json = json_encode($allips);
 
-        if(file_put_contents(storage_path(self::$file),$json))
-            return true;        
-            
-        return false;   
+        return file_put_contents(storage_path(self::$file),$json);
+
     }
 
     /**
-     * Crea un fichero JSON con los datos de la ubicacion de 
+     * Crea un fichero JSON con los datos de la ubicacion de
      * la ip.
-     * 
+     *
      * @param object $visitsIp
      * @param object $visitGroup
      * @param bool $isAuth
-     * 
+     *
      * @return array
      */
     public static function complementArray(object $visitsIp, object $visitGroup, bool $isAuth=false){
         $allIps_json = file_get_contents(storage_path(self::$file));
-        $allips = json_decode($allIps_json);        
+        $allips = json_decode($allIps_json);
 
         $allipsCities = [];
 
-        foreach ($visitGroup as $group) {            
-            
+        foreach ($visitGroup as $group) {
+
             $addData = [];
 
             foreach ($allips as $value) {
                 if($group->number_ip==$value->number_ip){
-                    
+
                     $contador = 0;
 
                     $addData=[
@@ -96,7 +97,7 @@ class SavePlaceTrait{
                         'lat'=>$value->lat,
                         'lon'=>$value->lon,
                     ];
-                    
+
                     $createdAt = '';
 
                     foreach ($visitsIp as $valueIp) {
@@ -115,7 +116,7 @@ class SavePlaceTrait{
                     $allipsCities[]=$addData;
                     break;
                 }
-            }            
+            }
         }
 
         $json = json_encode($allipsCities);
@@ -131,14 +132,14 @@ class SavePlaceTrait{
 
     /**
      * Abre los dos ficheros JSON y los decofica para poder leer en php
-     * 
+     *
      * @return array
      */
     public static function searchAllips(){
 
         $allIps_no_Auth = file_get_contents(storage_path(self::$file_ip_no_Auth));
         $noAuth = json_decode($allIps_no_Auth);
-        
+
         $allIps_Auth = file_get_contents(storage_path(self::$file_ip_auth));
         $allAuth = json_decode($allIps_Auth);
 
